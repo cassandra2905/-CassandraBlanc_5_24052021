@@ -14,14 +14,21 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.redirect('/views/produits.html');
+})
+
+app.use('/views', express.static(path.join(__dirname, 'views')));
+app.use(express.static('views'));
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.static('images'));
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api/cameras', cameraRoutes);
 app.use('/api/teddies', teddyRoutes);
-app.use('/api/furniture', furnitureRoutes);
+app.use('/api/furnitures', furnitureRoutes);
 
 module.exports = app;

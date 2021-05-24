@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Liste des produits</h2>
+    <ul>
+        <li>
+            <h3>Caméras vintage</h3>
+        </li>
+        <ul id="cameras-list"></ul>
+
+        <li>
+            <h3>Ours en peluche faits à la main</h3>
+        </li>
+        <ul id="teddies-list"></ul>
+
+        <li>
+            <h3>Meubles en chêne</h3>
+        </li>
+        <ul id="furnitures-list"></ul>
+    </ul>
+
+    <script>
+        const cameraListElement = document.getElementById("cameras-list");
+        const teddiesListElement = document.getElementById("teddies-list");
+        const furnituresListElement = document.getElementById("furnitures-list");
+
+        // Créer la liste HTML des produits d'une catégorie et l'envoie à la cible sur le DOM
+        function completeList(data, targetElement) {
+            data.forEach((element) => {
+                const liElement = document.createElement("li");
+                liElement.innerHTML = `<h4>${element.name}</h4>
+                <h5>${element.price}</h5>
+                <p>${element.description}</p>`;
+
+                targetElement.appendChild(liElement);
+            });
+        }
+
+        // On récupère les caméras et on les ajoutes au DOM
+        fetch("/api/cameras")
+            .then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+            .then(function (data) {
+                completeList(data, cameraListElement);
+            })
+            .catch(function (err) {
+                console.error("Erreur", error);
+            });
+
+        // On récupère les nounours et on les ajoutes au DOM
+        fetch("/api/teddies")
+            .then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+            .then(function (data) {
+                completeList(data, teddiesListElement);
+            })
+            .catch(function (err) {
+                console.error("Erreur", error);
+            });
+
+        // On récupère les fournitures et on les ajoutes au DOM
+        fetch("/api/furnitures")
+            .then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+            .then(function (data) {
+                completeList(data, furnituresListElement);
+            })
+            .catch(function (err) {
+                console.error("Erreur", error);
+            });
+    </script>
+</body>
+
+</html>
