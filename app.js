@@ -15,11 +15,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.redirect('/views/produits.html');
+  res.redirect('/front-end/liste-produits.html');
 })
 
-app.use('/views', express.static(path.join(__dirname, 'views')));
-app.use(express.static('views'));
+app.use('/front-end', express.static(path.join(__dirname, 'front-end')));
+app.use(express.static('front-end'));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.static('images'));
