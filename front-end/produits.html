@@ -5,16 +5,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Produits</title>
 </head>
 
 <body>
-    <h2>Produits</h2>
+    <section>
+        <h2 id="title"></h2>
+        <h3>Description</h3>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolorum eum eius! A saepe cupiditate
+            quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae mollitia!
+        </p>
+        <h3 id="price"></h3>
+        <form method="post" action="produits.html">
+            <h3>Couleur</h3>
+            <input type="radio" name="color" value="tan" id="tan" /> <label for="tan">Tan</label>
+            <input type="radio" name="color" value="chocolate" id="chocolate" /> <label
+                for="chocolate"></label>Chocolate</label>
+            <input type="radio" name="color" value="black" id="black" /> <label for="black">Black</label>
+            <input type="radio" name="color" value="white" id="white" /> <label for="white">White</label>
+        </form>
+        <h3>Quantité</h3>
+        <input type="number" min="1" max="10" value="1">
+
+    </section>
+
     <script>
-        function displayProduct(data, targetElement) {
-
-        }
-
+        const titre = document.getElementById("title");
+        const prix = document.getElementById("price");
         const url = new URL(document.location.href);
         const id = url.searchParams.get("id");
 
@@ -26,7 +44,8 @@
             })
             .then(function (data) {
                 console.log(data);
-                displayProduct(data)
+                titre.innerText = data.name;
+                prix.innerText = data.price + "€";
             })
             .catch(function (err) {
                 console.error("Erreur", error);
