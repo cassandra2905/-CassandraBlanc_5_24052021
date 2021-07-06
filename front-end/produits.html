@@ -11,7 +11,7 @@
 <body>
     <section>
         <h2 id="title"></h2>
-        <h3>Description</h3>
+        <img id="imageUrl" src="" />
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolorum eum eius! A saepe cupiditate
             quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae mollitia!
@@ -19,20 +19,28 @@
         <h3 id="price"></h3>
         <form method="post" action="produits.html">
             <h3>Couleur</h3>
-            <input type="radio" name="color" value="tan" id="tan" /> <label for="tan">Tan</label>
-            <input type="radio" name="color" value="chocolate" id="chocolate" /> <label
-                for="chocolate"></label>Chocolate</label>
-            <input type="radio" name="color" value="black" id="black" /> <label for="black">Black</label>
-            <input type="radio" name="color" value="white" id="white" /> <label for="white">White</label>
+            <p>
+                <select name="colors-list" id="colors">
+
+                </select>
+            </p>
+
+            <h3>Quantité</h3>
+            <input type="number" min="1" max="10" value="1"> <br />
+
+            <input type="submit" value="Ajouter au panier">
         </form>
-        <h3>Quantité</h3>
-        <input type="number" min="1" max="10" value="1">
+
 
     </section>
 
     <script>
         const titre = document.getElementById("title");
         const prix = document.getElementById("price");
+        const listeCouleur = document.getElementById("colors");
+        const image = document.getElementById("imageUrl");
+
+        // On récupère l'id dans l'url
         const url = new URL(document.location.href);
         const id = url.searchParams.get("id");
 
@@ -45,7 +53,14 @@
             .then(function (data) {
                 console.log(data);
                 titre.innerText = data.name;
-                prix.innerText = data.price + "€";
+                prix.innerText = "Prix : " + data.price + "€";
+                data.colors.forEach(color => {
+                    const ligneCouleur = document.createElement("option");
+                    ligneCouleur.value = color;
+                    ligneCouleur.innerText = color;
+                    listeCouleur.appendChild(ligneCouleur);
+                });
+                image.src = data.imageUrl;
             })
             .catch(function (err) {
                 console.error("Erreur", error);
