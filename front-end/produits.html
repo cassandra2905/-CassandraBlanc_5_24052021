@@ -17,7 +17,7 @@
             quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae mollitia!
         </p>
         <h3 id="price"></h3>
-        <form method="post" action="produits.html">
+        <form>
             <h3>Couleur</h3>
             <p>
                 <select name="colors-list" id="colors">
@@ -26,19 +26,24 @@
             </p>
 
             <h3>Quantité</h3>
-            <input type="number" min="1" max="10" value="1"> <br />
+            <input id="quantite" type="number" min="1" max="10" value="1"> <br />
 
-            <input type="submit" value="Ajouter au panier">
+            <button id="ajouter">Ajouter au panier</button>
         </form>
+        <div>
 
-
+        </div>
     </section>
 
     <script>
+        let donneesProduit;
+        const panier = [];
+
         const titre = document.getElementById("title");
         const prix = document.getElementById("price");
         const listeCouleur = document.getElementById("colors");
         const image = document.getElementById("imageUrl");
+        const quantite = document.getElementById("quantite");
 
         // On récupère l'id dans l'url
         const url = new URL(document.location.href);
@@ -52,6 +57,7 @@
             })
             .then(function (data) {
                 console.log(data);
+                donneesProduit = data;
                 titre.innerText = data.name;
                 prix.innerText = "Prix : " + data.price + "€";
                 data.colors.forEach(color => {
@@ -59,12 +65,27 @@
                     ligneCouleur.value = color;
                     ligneCouleur.innerText = color;
                     listeCouleur.appendChild(ligneCouleur);
+
                 });
                 image.src = data.imageUrl;
             })
             .catch(function (err) {
                 console.error("Erreur", error);
             });
+
+        //On créer l'évenement ajouter au panier
+
+        const ajouter = document.getElementById("ajouter");
+
+        ajouter.addEventListener('click', event => {
+            event.preventDefault();
+            ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
+            panier.push([donneesProduit._id, quantite, colors]);
+            const couleur = listeCouleur.options[listeCouleur.selectedIndex].value;
+            const nombre = quantite.value;
+            console.log(nombre);
+            console.log(couleur);
+        });
     </script>
 </body>
 
