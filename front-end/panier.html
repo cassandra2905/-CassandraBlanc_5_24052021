@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier</title>
+</head>
+
+<body>
+    <h2>Votre panier</h2>
+    <div id="listeArticles"></div>
+
+
+    <script>
+        //On charge notre panier vide au départ (si aucun produit n'est séléctionné)
+        let panier = [];
+        if (localStorage.panier) {
+            panier = JSON.parse(localStorage.panier);
+        }
+
+        // const titre = document.getElementById("title");
+        // const image = document.getElementById("imageUrl");
+        // const prix = document.getElementById("price");
+        // const quantite = document.getElementById("quantite");
+        // const couleur = document.getElementById("color");
+
+        //faire un lien vers le dom a l'aide de get element by id
+        let listePanier = document.getElementById('listeArticles');
+
+        panier.forEach(produit => {
+            console.log("produit", produit);
+
+            fetch("/api/teddies/" + produit.id)
+                .then(function (res) {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(function (data) {
+                    console.log("data", data);
+
+                    let unitPrice = 0;
+
+                    let articlePanier = document.createElement('div');
+                    articlePanier.innerHTML = "<h4>" + data.name + "</h4>" + '<img style="width: 10rem;" src="' + data.imageUrl + '" alt="' + data.name + '"/>' + "<p>Couleur : " + produit.couleur + "</p>" + "<p>Quantité : " + produit.quantite + "</p>" + "<p>Prix :" + data.price + "</p>";
+                    listePanier.appendChild(articlePanier);
+
+                })
+                .catch(function (error) {
+                    console.error("Erreur", error);
+                });
+        });
+
+        /*On charge notre panier plein si l'on séléctionne des articles pour cela on doit créer celui-ci en html à l'aide de createElement*/
+    </script>
+</body>
+
+</html>

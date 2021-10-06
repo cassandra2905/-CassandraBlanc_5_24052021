@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>liste-produits</title>
 </head>
 
 <body>
@@ -24,12 +24,12 @@
         function completeList(data, targetElement) {
             data.forEach((element) => {
                 const liElement = document.createElement("li");
-                liElement.innerHTML = `<a href="/front-end/produits.html?id=${element._id}">
+                liElement.innerHTML = `<a href="/front-end/produit.html?id=${element._id}">
                     <h4>${element.name}</h4>
                 </a>
                 <img src="${element.imageUrl}" alt="${element.name}"/>
                 <h5>${element.price}</h5>
-                <p>${element.description}</p>`;
+                <p>Coloris aux choix</p>`;
                 console.log(element);
 
                 targetElement.appendChild(liElement);

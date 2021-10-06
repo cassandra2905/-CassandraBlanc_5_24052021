@@ -36,8 +36,14 @@
     </section>
 
     <script>
+        // On créer une variable vide pour gérer le panier et on charge les données de localStorage
+        // afin de ne pas perdre les données à chaque changement de pages
+        let panier = [];
+        if (localStorage.panier) {
+            panier = JSON.parse(localStorage.panier);
+        }
+
         let donneesProduit;
-        const panier = [];
 
         const titre = document.getElementById("title");
         const prix = document.getElementById("price");
@@ -65,7 +71,6 @@
                     ligneCouleur.value = color;
                     ligneCouleur.innerText = color;
                     listeCouleur.appendChild(ligneCouleur);
-
                 });
                 image.src = data.imageUrl;
             })
@@ -79,17 +84,23 @@
 
         ajouter.addEventListener('click', event => {
             event.preventDefault();
-            ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
-            panier.push([donneesProduit._id, quantite, colors]);
             const couleur = listeCouleur.options[listeCouleur.selectedIndex].value;
-            const nombre = quantite.value;
-            console.log(nombre);
-            console.log(couleur);
+
+            const produit = {
+                "id": donneesProduit._id,
+                "quantite": quantite.value,
+                "couleur": couleur
+            }
+
+            panier.push(produit);
+            localStorage.panier = JSON.stringify(panier);
+            ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
 
             setTimeout(() => {
                 ajouter.innerText = "Ajouter au panier";
             }, 3000);
         });
+
     </script>
 </body>
 
