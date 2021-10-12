@@ -9,9 +9,9 @@
 </head>
 
 <body>
+    <a href="/front-end/liste-produits.html">Accueil</a>
     <h2>Votre panier</h2>
     <div id="listeArticles"></div>
-
 
     <script>
         //On charge notre panier vide au départ (si aucun produit n'est séléctionné)
@@ -20,13 +20,7 @@
             panier = JSON.parse(localStorage.panier);
         }
 
-        // const titre = document.getElementById("title");
-        // const image = document.getElementById("imageUrl");
-        // const prix = document.getElementById("price");
-        // const quantite = document.getElementById("quantite");
-        // const couleur = document.getElementById("color");
-
-        //faire un lien vers le dom a l'aide de get element by id
+        // Faire un lien vers le dom a l'aide de get element by id
         let listePanier = document.getElementById('listeArticles');
 
         panier.forEach(produit => {
@@ -38,15 +32,13 @@
                         return res.json();
                     }
                 })
+                // Ensuite pour chaque article qui sera choisi on aura ses caractéristique nom, couleur, qté
                 .then(function (data) {
                     console.log("data", data);
-
-                    let unitPrice = 0;
 
                     let articlePanier = document.createElement('div');
                     articlePanier.innerHTML = "<h4>" + data.name + "</h4>" + '<img style="width: 10rem;" src="' + data.imageUrl + '" alt="' + data.name + '"/>' + "<p>Couleur : " + produit.couleur + "</p>" + "<p>Quantité : " + produit.quantite + "</p>" + "<p>Prix :" + data.price + "</p>";
                     listePanier.appendChild(articlePanier);
-
                 })
                 .catch(function (error) {
                     console.error("Erreur", error);

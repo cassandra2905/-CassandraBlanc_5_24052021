@@ -9,12 +9,10 @@
 </head>
 
 <body>
-    <h2>Liste des produits</h2>
+    <a href="/front-end/panier.html">Panier</a>
+    <h1>Ours en peluche faits à la main</h1>
     <ul>
-        <li>
-            <h3>Ours en peluche faits à la main</h3>
-        </li>
-        <ul id="teddies-list"></ul>
+        <li id="teddies-list"></li>
     </ul>
 
     <script>
@@ -25,10 +23,10 @@
             data.forEach((element) => {
                 const liElement = document.createElement("li");
                 liElement.innerHTML = `<a href="/front-end/produit.html?id=${element._id}">
-                    <h4>${element.name}</h4>
+                    <h3>${element.name}</h3>
                 </a>
                 <img src="${element.imageUrl}" alt="${element.name}"/>
-                <h5>${element.price}</h5>
+                <h4>${element.price}</h4>
                 <p>Coloris aux choix</p>`;
                 console.log(element);
 

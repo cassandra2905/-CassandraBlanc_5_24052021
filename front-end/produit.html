@@ -10,6 +10,8 @@
 
 <body>
     <section>
+        <a href="/front-end/liste-produits.html">Accueil</a>
+        <a href="/front-end/panier.html">Panier</a>
         <h2 id="title"></h2>
         <img id="imageUrl" src="" />
         <p>
@@ -79,20 +81,30 @@
             });
 
         //On créer l'évenement ajouter au panier
-
         const ajouter = document.getElementById("ajouter");
 
         ajouter.addEventListener('click', event => {
             event.preventDefault();
             const couleur = listeCouleur.options[listeCouleur.selectedIndex].value;
+            // On vérifie si les articles déjà présents dans le panier ont le même id et la même quantité afin de ne pas les répeter intempestivement dans notre panier 
+            let dejaPresent = false;
+            panier.forEach(articlePanier => {
+                if (articlePanier.id == donneesProduit._id && articlePanier.couleur == couleur) {
+                    articlePanier.quantite = +articlePanier.quantite + +quantite.value;
+                    dejaPresent = true;
+                }
+            });
 
-            const produit = {
-                "id": donneesProduit._id,
-                "quantite": quantite.value,
-                "couleur": couleur
+            if (!dejaPresent) {
+                const produit = {
+                    "id": donneesProduit._id,
+                    "quantite": quantite.value,
+                    "couleur": couleur
+                }
+
+                panier.push(produit);
             }
 
-            panier.push(produit);
             localStorage.panier = JSON.stringify(panier);
             ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
 
