@@ -14,6 +14,18 @@
     <div id="listeArticles"></div>
 
     <script>
+        function moins(id) {
+            const inputQuantite = document.getElementById("quantite_" + id);
+            if (inputQuantite.value > 1) {
+                inputQuantite.value--;
+            }
+        }
+
+        function plus(id) {
+            const inputQuantite = document.getElementById("quantite_" + id);
+            inputQuantite.value++;
+        }
+
         //On charge notre panier vide au départ (si aucun produit n'est séléctionné)
         let panier = [];
         if (localStorage.panier) {
@@ -35,17 +47,28 @@
                 // Ensuite pour chaque article qui sera choisi on aura ses caractéristique nom, couleur, qté
                 .then(function (data) {
                     console.log("data", data);
-
+                    /*On charge notre panier plein si l'on séléctionne des articles 
+                    pour cela on doit créer celui-ci en html à l'aide de createElement*/
                     let articlePanier = document.createElement('div');
-                    articlePanier.innerHTML = "<h4>" + data.name + "</h4>" + '<img style="width: 10rem;" src="' + data.imageUrl + '" alt="' + data.name + '"/>' + "<p>Couleur : " + produit.couleur + "</p>" + "<p>Quantité : " + produit.quantite + "</p>" + "<p>Prix :" + data.price + "</p>";
+                    // je créer en html les données relatives au produit id qté couleur grâce à la propriété innerHTML
+                    articlePanier.innerHTML = `<h4>${data.name}</h4>
+                    <img style="width: 10rem;" src="${data.imageUrl}" alt="${data.name}"/>
+                    <p>Couleur : ${produit.couleur}</p>
+                    <div>
+                        <p>Quantité :</p>
+                        <button class="bt-moins" onclick="moins('${data._id}_${produit.couleur}')">-</button>
+                        <input type="text" id="quantite_${data._id}_${produit.couleur}" class="input_quantite" value="${produit.quantite}" readonly/>
+                        <button class="bt-plus" onclick="plus('${data._id}_${produit.couleur}')">+</button>
+                    </div>
+                    <p>Prix : ${data.price}</p>`;
+
                     listePanier.appendChild(articlePanier);
                 })
+
                 .catch(function (error) {
                     console.error("Erreur", error);
                 });
         });
-
-        /*On charge notre panier plein si l'on séléctionne des articles pour cela on doit créer celui-ci en html à l'aide de createElement*/
     </script>
 </body>
 

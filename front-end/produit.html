@@ -86,7 +86,8 @@
         ajouter.addEventListener('click', event => {
             event.preventDefault();
             const couleur = listeCouleur.options[listeCouleur.selectedIndex].value;
-            // On vérifie si les articles déjà présents dans le panier ont le même id et la même quantité afin de ne pas les répeter intempestivement dans notre panier 
+            // On vérifie si les articles déjà présents dans le panier ont le même id
+            // et la même couleur afin de ne pas les répeter intempestivement dans notre panier 
             let dejaPresent = false;
             panier.forEach(articlePanier => {
                 if (articlePanier.id == donneesProduit._id && articlePanier.couleur == couleur) {
