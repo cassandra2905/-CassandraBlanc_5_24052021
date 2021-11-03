@@ -26,6 +26,29 @@
             inputQuantite.value++;
         }
 
+        // On créé une fonction qui supprime un produit dans notre panier
+        // ici data correspond à une chaine de texte contenant l'id du produit et sa couleur séparés avec un '_'
+        function supprimer(data) {
+            // On split (découpe) le texte à chaque '_' et on met le résultat dans un tableau 
+            data = data.split('_');
+
+            // On filtre le panier pour vérifier si les articles ont le même id et la même couleur
+            panier = panier.filter(article => {
+
+                // On retourne tous les articles dans le panier sauf celui qu'on veut supprimer
+                // (celui qui a le même id et la même couleur n'est pas retourné et disparaît donc du panier)
+                if (article.id != data[0] || article.couleur != data[1]) {
+                    return article;
+                }
+            });
+
+            //On stocke le nouveau panier dans le local storage
+            localStorage.panier = JSON.stringify(panier);
+
+            //On actuaise avec reload la page
+            location.reload();
+        }
+
         //On charge notre panier vide au départ (si aucun produit n'est séléctionné)
         let panier = [];
         if (localStorage.panier) {
@@ -44,6 +67,7 @@
                         return res.json();
                     }
                 })
+
                 // Ensuite pour chaque article qui sera choisi on aura ses caractéristique nom, couleur, qté
                 .then(function (data) {
                     console.log("data", data);
@@ -59,6 +83,7 @@
                         <button class="bt-moins" onclick="moins('${data._id}_${produit.couleur}')">-</button>
                         <input type="text" id="quantite_${data._id}_${produit.couleur}" class="input_quantite" value="${produit.quantite}" readonly/>
                         <button class="bt-plus" onclick="plus('${data._id}_${produit.couleur}')">+</button>
+                        <button class="bt-supprimer" onclick="supprimer('${data._id}_${produit.couleur}')">Supprimer</button>
                     </div>
                     <p>Prix : ${data.price}</p>`;
 
