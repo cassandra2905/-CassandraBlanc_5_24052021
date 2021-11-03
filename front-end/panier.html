@@ -12,6 +12,7 @@
     <a href="/front-end/liste-produits.html">Accueil</a>
     <h2>Votre panier</h2>
     <div id="listeArticles"></div>
+    <div>TOTAL: <span id="totalArticles"></span> €</div>
 
     <script>
         function moins(id) {
@@ -55,8 +56,12 @@
             panier = JSON.parse(localStorage.panier);
         }
 
-        // Faire un lien vers le dom a l'aide de get element by id
+        //Faire un lien vers le dom à l'aide de get element by id
         let listePanier = document.getElementById('listeArticles');
+        let totalPanier = document.getElementById('totalArticles');
+
+        //On crée une variable contenant le coût total des articles de notre panier
+        let total = 0;
 
         panier.forEach(produit => {
             console.log("produit", produit);
@@ -71,10 +76,16 @@
                 // Ensuite pour chaque article qui sera choisi on aura ses caractéristique nom, couleur, qté
                 .then(function (data) {
                     console.log("data", data);
+
+                    //On créer une variable globale total qui multiplie le prix des produits aux quantités
+                    total = total + (data.price * produit.quantite);
+                    totalPanier.innerText = total / 100;
+                    console.log("total", total);
+
                     /*On charge notre panier plein si l'on séléctionne des articles 
                     pour cela on doit créer celui-ci en html à l'aide de createElement*/
                     let articlePanier = document.createElement('div');
-                    // je créer en html les données relatives au produit id qté couleur grâce à la propriété innerHTML
+                    // On crée en html les données relatives au produit id qté couleur grâce à la propriété innerHTML
                     articlePanier.innerHTML = `<h4>${data.name}</h4>
                     <img style="width: 10rem;" src="${data.imageUrl}" alt="${data.name}"/>
                     <p>Couleur : ${produit.couleur}</p>
@@ -85,7 +96,7 @@
                         <button class="bt-plus" onclick="plus('${data._id}_${produit.couleur}')">+</button>
                         <button class="bt-supprimer" onclick="supprimer('${data._id}_${produit.couleur}')">Supprimer</button>
                     </div>
-                    <p>Prix : ${data.price}</p>`;
+                    <p>Prix : ${data.price / 100} €</p>`;
 
                     listePanier.appendChild(articlePanier);
                 })

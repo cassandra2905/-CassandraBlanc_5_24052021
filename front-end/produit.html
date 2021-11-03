@@ -105,7 +105,7 @@
 
                 panier.push(produit);
             }
-
+            //On stocke le nouveau panier dans le local storage
             localStorage.panier = JSON.stringify(panier);
             ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
 
