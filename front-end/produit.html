@@ -9,33 +9,40 @@
 </head>
 
 <body>
-    <section>
+    <header>
         <a href="/front-end/liste-produits.html">Accueil</a>
         <a href="/front-end/panier.html">Panier</a>
-        <h2 id="title"></h2>
-        <img id="imageUrl" src="" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolorum eum eius! A saepe cupiditate
-            quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae mollitia!
-        </p>
-        <h3 id="price"></h3>
-        <form>
-            <h3>Couleur</h3>
+    </header>
+    <main>
+        <section>
+            <h2 id="title"></h2>
+            <img id="imageUrl" src="" />
             <p>
-                <select name="colors-list" id="colors">
-
-                </select>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolorum eum eius! A saepe cupiditate
+                quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae
+                mollitia!
             </p>
+        </section>
 
-            <h3>Quantité</h3>
+        <h3 id="price"></h3>
+
+        <h3>Couleur</h3>
+
+        <p>
+            <select name="colors-list" id="colors"></select>
+        </p>
+
+        <h3>Quantité</h3>
+
+        <form>
             <input id="quantite" type="number" min="1" max="10" value="1"> <br />
-
-            <button id="ajouter">Ajouter au panier</button>
         </form>
-        <div>
 
-        </div>
-    </section>
+        <button id="ajouter">Ajouter au panier</button>
+    </main>
+    <footer>
+
+    </footer>
 
     <script>
         // On créer une variable vide pour gérer le panier et on charge les données de localStorage
@@ -67,7 +74,7 @@
                 console.log(data);
                 donneesProduit = data;
                 titre.innerText = data.name;
-                prix.innerText = "Prix : " + data.price + "€";
+                prix.innerText = "Prix : " + data.price / 100 + " €";
                 data.colors.forEach(color => {
                     const ligneCouleur = document.createElement("option");
                     ligneCouleur.value = color;

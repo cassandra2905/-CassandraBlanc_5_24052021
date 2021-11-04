@@ -9,11 +9,20 @@
 </head>
 
 <body>
-    <a href="/front-end/panier.html">Panier</a>
-    <h1>Ours en peluche faits à la main</h1>
-    <ul>
-        <li id="teddies-list"></li>
-    </ul>
+    <header>
+        <a href="/front-end/panier.html">Panier</a>
+    </header>
+
+    <main>
+        <h1>Ours en peluche faits à la main</h1>
+        <ul>
+            <li id="teddies-list"></li>
+        </ul>
+    </main>
+
+    <footer>
+
+    </footer>
 
     <script>
         const teddiesListElement = document.getElementById("teddies-list");
@@ -26,7 +35,7 @@
                     <h3>${element.name}</h3>
                 </a>
                 <img src="${element.imageUrl}" alt="${element.name}"/>
-                <h4>${element.price}</h4>
+                <h4>${element.price / 100} € </h4>
                 <p>Coloris aux choix</p>`;
                 console.log(element);
 
