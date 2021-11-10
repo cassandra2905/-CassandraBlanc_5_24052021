@@ -17,7 +17,43 @@
     <main>
         <h2>Votre panier</h2>
         <div id="listeArticles"></div>
-        <div>TOTAL: <span id="totalArticles"></span> €</div>
+        <div> Total panier: <span id="totalArticles"></span> €</div><br>
+
+        <p>Veuillez remplir le formulaire ci-dessous afin de valider votre commande</p>
+        <form id="paiement">
+            <fieldset>
+                <ul>
+                    <li>
+                        <label for="firstName">Prénom</label>
+                        <input id="firstName" name="firstName" type="text" placeholder="Entrez votre prénom" required>
+                    </li>
+                    <li>
+                        <label for="lastName">Nom</label>
+                        <input id="lastName" name="lastName" type="text" placeholder="Entrez votre nom" required
+                            autofocus>
+                    </li>
+
+                    <li>
+                        <label for="address">Adresse</label>
+                        <input id="address" name="address" type="text" required>
+                    </li>
+
+                    <li>
+                        <label for="city">Ville</label>
+                        <input id="city" name="city" type="text" required>
+                    </li>
+
+                    <li>
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="monadresse@mail.com" required>
+                    </li>
+
+                    <div>
+                        <button id="send">Envoyer</button>
+                    </div>
+                </ul>
+            </fieldset>
+        </form>
     </main>
 
     <footer>
@@ -25,6 +61,57 @@
     </footer>
 
     <script>
+        const sendForm = document.getElementById("send");
+        const firstName = document.getElementById("firstName");
+        const lastName = document.getElementById("lastName");
+        const adress = document.getElementById("address");
+        const city = document.getElementById("city");
+        const email = document.getElementById("email");
+
+        sendForm.addEventListener('click', e => {
+            e.preventDefault();
+
+            const panierForm = [];
+            panier.forEach(article => {
+                panierForm.push(article.id);
+            });
+
+            const body = {
+                contact: {
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    address: adress.value,
+                    city: city.value,
+                    email: email.value
+                },
+                products: panierForm
+            };
+
+            fetch("/api/teddies/order", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+                .then(function (res) {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(function (data) {
+                    console.log("data", data);
+                    data.total = total;
+                    localStorage.order = JSON.stringify(data);
+
+                    location.assign("./confirmation.html");
+                })
+                .catch(function (error) {
+                    console.error("Erreur", error);
+                });
+        });
+
         function moins(id) {
             const inputQuantite = document.getElementById("quantite_" + id);
             if (inputQuantite.value > 1) {

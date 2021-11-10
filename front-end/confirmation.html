@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation commande</title>
+</head>
+
+<body>
+    <header>
+        <a href="/front-end/liste-produits.html">Accueil</a>
+        <a href="/front-end/panier.html">Panier</a>
+    </header>
+    <main>
+        <h1>MERCI POUR VOTRE COMMANDE !</h1>
+        <p>Bonjour <span id="firstNameClient"></span>,</p>
+        <p>Votre commande à bien été confirmée et nous vous en remercions !</p>
+        <p>Prix total TTC :<span id="totalPrice"></span> </p>
+        <p>
+            Vous trouverez-ci dessous le récapitulatif de votre commande :
+            <span id="orderId"></span>
+        </p>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script>
+        const firstName = document.getElementById("firstNameClient");
+        const totalPrice = document.getElementById("totalPrice");
+        const orderId = document.getElementById("orderId");
+
+        if (localStorage.order) {
+            const data = JSON.parse(localStorage.order);
+
+            firstName.innerText = data.contact.firstName;
+            totalPrice.innerText = `${data.total / 100} €`;
+            orderId.innerText = data.orderId;
+
+            localStorage.removeItem("order");
+        } else {
+            location.assign("./liste-produits.html");
+        }
+    </script>
+</body>
+
+</html>
