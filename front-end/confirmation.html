@@ -28,10 +28,12 @@
     </footer>
 
     <script>
+        //On créer les variables pour intéragir avec le DOM afin de remplir les champs prénom, prix total et Id commande
         const firstName = document.getElementById("firstNameClient");
         const totalPrice = document.getElementById("totalPrice");
         const orderId = document.getElementById("orderId");
 
+        //
         if (localStorage.order) {
             const data = JSON.parse(localStorage.order);
 

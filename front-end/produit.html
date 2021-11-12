@@ -64,6 +64,9 @@
         const url = new URL(document.location.href);
         const id = url.searchParams.get("id");
 
+        //On effectue une requête réseau en fetch pour appeler l'api et les id des produits
+        //Ensuite on récupère à l'aide d'une fonction l'objet contenant le nom du produit,
+        //Sa couleur (à l'aide d'une boucle pour chaque), son prix ainsi que son image
         fetch("/api/teddies/" + id)
             .then(function (res) {
                 if (res.ok) {
