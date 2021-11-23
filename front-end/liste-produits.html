@@ -15,46 +15,37 @@
 
     <main>
         <h1>Ours en peluche faits à la main</h1>
-        <ul>
-            <li id="teddies-list"></li>
-        </ul>
+        <ul id="teddies-list"></ul>
     </main>
 
     <footer>
 
     </footer>
 
+    <script src="./js/product.js"></script>
+    <script src="./js/listproducts.js"></script>
+    <script src="./js/cart.js"></script>
+
+
     <script>
         const teddiesListElement = document.getElementById("teddies-list");
 
-        // Créer la liste HTML des produits d'une catégorie et l'envoie à la cible sur le DOM
-        function completeList(data, targetElement) {
-            data.forEach((element) => {
-                const liElement = document.createElement("li");
-                liElement.innerHTML = `<a href="/front-end/produit.html?id=${element._id}">
-                    <h3>${element.name}</h3>
-                </a>
-                <img src="${element.imageUrl}" alt="${element.name}"/>
-                <h4>${element.price / 100} €</h4>
-                <p>Coloris aux choix</p>`;
-                console.log(element);
+        const cart = new Cart();
+        const products = new ListProducts();
 
-                targetElement.appendChild(liElement);
-            });
-        }
+        products.loadingProducts()
+            .then(() => {
+                for (const product of products.getProductsWithColorsNotUnique()) {
+                    const liElement = document.createElement("li");
+                    liElement.innerHTML = `<a href="/front-end/produit.html?id=${product.id}">
+                        <h3>${product.name}</h3>
+                    </a>
+                    <img src="${product.image}" alt="${product.name}" style="width: 15rem;"/>
+                    <h4>${product.getFormattedPrice()}</h4>
+                    <p>Coloris aux choix</p>`;
 
-        // On récupère les teddies et on les ajoutes au DOM
-        fetch("/api/teddies")
-            .then(function (res) {
-                if (res.ok) {
-                    return res.json();
+                    teddiesListElement.appendChild(liElement);
                 }
-            })
-            .then(function (data) {
-                completeList(data, teddiesListElement);
-            })
-            .catch(function (err) {
-                console.error("Erreur", error);
             });
     </script>
 </body>
