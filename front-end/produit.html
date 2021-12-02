@@ -17,11 +17,7 @@
         <section>
             <h2 id="title"></h2>
             <img id="imageUrl" src="" />
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolorum eum eius! A saepe cupiditate
-                quisquam sunt dolore fuga dolorum, odit nobis rerum maiores fugit magnam, officia repellat quae
-                mollitia!
-            </p>
+            <p id="description"></p>
         </section>
 
         <h3 id="price"></h3>
@@ -44,50 +40,43 @@
 
     </footer>
 
+    <script src="./js/product.js"></script>
+    <script src="./js/listproducts.js"></script>
+    <script src="./js/cart.js"></script>
+
     <script>
+        /* CHARGER LES CLASSES ET TRAITER LA PROMESSE DU PRODUIT */
+
+
         // On créer une variable vide pour gérer le panier et on charge les données de localStorage
         // afin de ne pas perdre les données à chaque changement de pages
-        let panier = [];
-        if (localStorage.panier) {
-            panier = JSON.parse(localStorage.panier);
-        }
-
-        let donneesProduit;
+        const cart = new Cart();
+        const products = new ListProducts();
 
         const titre = document.getElementById("title");
-        const prix = document.getElementById("price");
-        const listeCouleur = document.getElementById("colors");
         const image = document.getElementById("imageUrl");
+        const description = document.getElementById("description");
+        const price = document.getElementById("price");
+        const listeCouleur = document.getElementById("colors");
         const quantite = document.getElementById("quantite");
 
         // On récupère l'id dans l'url
         const url = new URL(document.location.href);
         const id = url.searchParams.get("id");
 
-        //On effectue une requête réseau en fetch pour appeler l'api et les id des produits
-        //Ensuite on récupère à l'aide d'une fonction l'objet contenant le nom du produit,
-        //Sa couleur (à l'aide d'une boucle pour chaque), son prix ainsi que son image
-        fetch("/api/teddies/" + id)
-            .then(function (res) {
-                if (res.ok) {
-                    return res.json();
-                }
-            })
-            .then(function (data) {
-                console.log(data);
-                donneesProduit = data;
-                titre.innerText = data.name;
-                prix.innerText = "Prix : " + data.price / 100 + " €";
-                data.colors.forEach(color => {
+        products.loadingProduct(id)
+            .then(product => {
+                titre.innerText = product.name;
+                image.src = product.imageUrl;
+                description.innerText = product.description;
+                price.value = product.price;
+                price.innerText = "Prix : " + product.price / 100 + " €";
+                product.colors.forEach(color => {
                     const ligneCouleur = document.createElement("option");
                     ligneCouleur.value = color;
                     ligneCouleur.innerText = color;
                     listeCouleur.appendChild(ligneCouleur);
                 });
-                image.src = data.imageUrl;
-            })
-            .catch(function (err) {
-                console.error("Erreur", error);
             });
 
         //On créer l'évenement ajouter au panier
@@ -95,35 +84,26 @@
 
         ajouter.addEventListener('click', event => {
             event.preventDefault();
-            const couleur = listeCouleur.options[listeCouleur.selectedIndex].value;
-            // On vérifie si les articles déjà présents dans le panier ont le même id
-            // et la même couleur afin de ne pas les répeter intempestivement dans notre panier 
-            let dejaPresent = false;
-            panier.forEach(articlePanier => {
-                if (articlePanier.id == donneesProduit._id && articlePanier.couleur == couleur) {
-                    articlePanier.quantite = +articlePanier.quantite + +quantite.value;
-                    dejaPresent = true;
-                }
-            });
+            const color = listeCouleur.options[listeCouleur.selectedIndex].value;
 
-            if (!dejaPresent) {
-                const produit = {
-                    "id": donneesProduit._id,
-                    "quantite": quantite.value,
-                    "couleur": couleur
-                }
+            // id, color, name, description, price, image
+            const selectProduct = new Product(
+                id,
+                color,
+                titre.innerText,
+                description.innerText,
+                price.value,
+                image.src
+            );
 
-                panier.push(produit);
-            }
-            //On stocke le nouveau panier dans le local storage
-            localStorage.panier = JSON.stringify(panier);
-            ajouter.innerText = `L'article ${donneesProduit.name} à été ajouté au panier`;
+            cart.addProduct(selectProduct, quantite.value);
+
+            ajouter.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
 
             setTimeout(() => {
                 ajouter.innerText = "Ajouter au panier";
             }, 3000);
         });
-
     </script>
 </body>
 

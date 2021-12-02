@@ -16,51 +16,55 @@
 
     <main>
         <h2>Votre panier</h2>
-        <div id="listeArticles"></div>
-        <p> Total panier: <span id="totalArticles"></span> €</p><br>
+        <div id="listProducts"></div>
+        <p>Total panier: <span id="totalProducts"></span> €</p><br>
 
         <p>Veuillez remplir le formulaire ci-dessous afin de valider votre commande</p>
-        <form id="paiement">
-            <fieldset>
-                <ul>
-                    <li>
-                        <label for="firstName">Prénom</label>
-                        <input id="firstName" name="firstName" type="text" placeholder="Entrez votre prénom" required>
-                    </li>
-                    <li>
-                        <label for="lastName">Nom</label>
-                        <input id="lastName" name="lastName" type="text" placeholder="Entrez votre nom" required
-                            autofocus>
-                    </li>
+        <form>
+            <ul>
+                <li>
+                    <label for="firstName">Prénom</label>
+                    <input id="firstName" name="firstName" type="text" placeholder="Entrez votre prénom" required>
+                </li>
+                <li>
+                    <label for="lastName">Nom</label>
+                    <input id="lastName" name="lastName" type="text" placeholder="Entrez votre nom" required autofocus>
+                </li>
 
-                    <li>
-                        <label for="address">Adresse</label>
-                        <input id="address" name="address" type="text" required>
-                    </li>
+                <li>
+                    <label for="address">Adresse</label>
+                    <input id="address" name="address" type="text" required>
+                </li>
 
-                    <li>
-                        <label for="city">Ville</label>
-                        <input id="city" name="city" type="text" required>
-                    </li>
+                <li>
+                    <label for="city">Ville</label>
+                    <input id="city" name="city" type="text" required>
+                </li>
 
-                    <li>
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="monadresse@mail.com" required>
-                    </li>
+                <li>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="monadresse@mail.com" required>
+                </li>
 
-                    <div>
-                        <button id="send">Envoyer</button>
-                    </div>
-                </ul>
-            </fieldset>
+                <div>
+                    <button id="send">Envoyer</button>
+                </div>
+            </ul>
         </form>
     </main>
 
-    <footer>
+    <footer></footer>
 
-    </footer>
+
+    <script src="./js/product.js"></script>
+    <script src="./js/listproducts.js"></script>
+    <script src="./js/cart.js"></script>
 
     <script>
+        const cart = new Cart();
+
+        const listProducts = document.getElementById('listProducts');
+        const totalProducts = document.getElementById('totalProducts');
         const sendForm = document.getElementById("send");
         const firstName = document.getElementById("firstName");
         const lastName = document.getElementById("lastName");
@@ -68,14 +72,49 @@
         const city = document.getElementById("city");
         const email = document.getElementById("email");
 
+        let total = 0;
+
+        for (const object_product of cart.listProducts) {
+            // id, color, name, description, price, image
+            const product = new Product(
+                object_product.id,
+                object_product.color,
+                object_product.name,
+                object_product.description,
+                object_product.price,
+                object_product.image
+            );
+
+            product.quantity = object_product.quantity;
+
+            total = total + (product.price * product.quantity);
+
+            const divProduct = document.createElement('div');
+
+            // On créé en html les données relatives au produit
+            divProduct.innerHTML = `<h4>${product.name}</h4>
+            <img style="width: 10rem;" src="${product.image}" alt="${product.name}"/>
+            <p>Couleur : ${product.color}</p>
+            <div>
+                <p>Quantité :</p>
+                <button class="bt-moins" onclick="less('${product.id}', '${product.color}')">-</button>
+                <input type="text" class="input_quantite" value="${product.quantity}" readonly/>
+                <button class="bt-plus" onclick="more('${product.id}', '${product.color}')">+</button>
+                <button class="bt-supprimer" onclick="deleteProduct('${product.id}', '${product.color}')">Supprimer</button>
+            </div>
+            <p>Prix : ${product.getFormattedPrice()}</p>`;
+
+            listProducts.appendChild(divProduct);
+        }
+
+        totalProducts.innerText = total / 100;
+
+        // Passer la commande
         sendForm.addEventListener('click', e => {
             e.preventDefault();
 
             // Pour chaque articles dans le panier on récupère l'id qu'on met dans un tableau 
-            const panierForm = [];
-            panier.forEach(article => {
-                panierForm.push(article.id);
-            });
+            const idProductsOfCart = cart.getIdProducts();
 
             const body = {
                 contact: {
@@ -85,7 +124,7 @@
                     city: city.value,
                     email: email.value
                 },
-                products: panierForm
+                products: idProductsOfCart
             };
 
             //On effectue une requête réseau pour envoyer les données 
@@ -116,97 +155,20 @@
                 });
         });
 
-        //fonctions relative aux boutons + et - pour choisir la quantité des produits
-        function moins(id) {
-            const inputQuantite = document.getElementById("quantite_" + id);
-            if (inputQuantite.value > 1) {
-                inputQuantite.value--;
-            }
-        }
-
-        function plus(id) {
-            const inputQuantite = document.getElementById("quantite_" + id);
-            inputQuantite.value++;
-        }
-
-        // On créé une fonction qui supprime un produit dans notre panier
-        // ici data correspond à une chaine de texte contenant l'id du produit et sa couleur séparés avec un '_'
-        function supprimer(data) {
-            // On split (découpe) le texte à chaque '_' et on met le résultat dans un tableau 
-            data = data.split('_');
-
-            // On filtre le panier pour vérifier si les articles ont le même id et la même couleur
-            panier = panier.filter(article => {
-
-                // On retourne tous les articles dans le panier sauf celui qu'on veut supprimer
-                // (celui qui a le même id et la même couleur n'est pas retourné et disparaît donc du panier)
-                if (article.id != data[0] || article.couleur != data[1]) {
-                    return article;
-                }
-            });
-
-            //On stocke le nouveau panier dans le local storage
-            localStorage.panier = JSON.stringify(panier);
-
-            //On actuaise avec reload la page
+        function less(id, color) {
+            cart.removeProduct({ id, color });
             location.reload();
         }
 
-        //On charge notre panier vide au départ (si aucun produit n'est séléctionné)
-        let panier = [];
-        if (localStorage.panier) {
-            panier = JSON.parse(localStorage.panier);
+        function more(id, color) {
+            cart.addProduct({ id, color });
+            location.reload();
         }
 
-        //Faire un lien vers le dom à l'aide de get element by id
-        let listePanier = document.getElementById('listeArticles');
-        let totalPanier = document.getElementById('totalArticles');
-
-        //On crée une variable contenant le coût total des articles de notre panier
-        let total = 0;
-
-        panier.forEach(produit => {
-            console.log("produit", produit);
-
-            fetch("/api/teddies/" + produit.id)
-                .then(function (res) {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                })
-
-                // Ensuite pour chaque article qui sera choisi on aura ses caractéristique nom, couleur, qté
-                .then(function (data) {
-                    console.log("data", data);
-
-                    //On créer une variable globale total qui multiplie le prix des produits aux quantités
-                    total = total + (data.price * produit.quantite);
-                    totalPanier.innerText = total / 100;
-                    console.log("total", total);
-
-                    /*On charge notre panier plein si l'on séléctionne des articles 
-                    pour cela on doit créer celui-ci en html à l'aide de createElement*/
-                    let articlePanier = document.createElement('div');
-                    // On crée en html les données relatives au produit id qté couleur image grâce à la propriété innerHTML
-                    articlePanier.innerHTML = `<h4>${data.name}</h4>
-                    <img style="width: 10rem;" src="${data.imageUrl}" alt="${data.name}"/>
-                    <p>Couleur : ${produit.couleur}</p>
-                    <div>
-                        <p>Quantité :</p>
-                        <button class="bt-moins" onclick="moins('${data._id}_${produit.couleur}')">-</button>
-                        <input type="text" id="quantite_${data._id}_${produit.couleur}" class="input_quantite" value="${produit.quantite}" readonly/>
-                        <button class="bt-plus" onclick="plus('${data._id}_${produit.couleur}')">+</button>
-                        <button class="bt-supprimer" onclick="supprimer('${data._id}_${produit.couleur}')">Supprimer</button>
-                    </div>
-                    <p>Prix : ${data.price / 100} €</p>`;
-
-                    listePanier.appendChild(articlePanier);
-                })
-
-                .catch(function (error) {
-                    console.error("Erreur", error);
-                });
-        });
+        function deleteProduct(id, color) {
+            cart.deleteProductOfCart({ id, color });
+            location.reload();
+        }
     </script>
 </body>
 

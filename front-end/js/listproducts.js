@@ -3,7 +3,9 @@ class ListProducts {
 
     constructor() { }
 
+    //Requete réseau exécutéé à l'aide d'une promesse (resolve) ou rejetée (dans le cas echéant)
     // Chargement de tout les produits dans le tableau
+
     loadingProducts() {
         return new Promise((resolve, reject) => {
             fetch("/api/teddies/")
@@ -34,6 +36,9 @@ class ListProducts {
         })
     }
 
+    //Requete réseau exécutéé à l'aide d'une promesse (resolve) ou rejetée (dans le cas echéant)
+    //Pour un seul produit (id)
+
     loadingProduct(id) {
         return new Promise((resolve, reject) => {
             fetch("/api/teddies/" + id)
@@ -53,6 +58,8 @@ class ListProducts {
         });
     }
 
+    //On génère la liste des produits sans leur couleurs au choix pour ne pas avoir de produits doublons
+
     getProductsWithColorsNotUnique() {
         const newList = [];
         const idList = [];
@@ -66,6 +73,4 @@ class ListProducts {
 
         return newList;
     }
-
-
 }

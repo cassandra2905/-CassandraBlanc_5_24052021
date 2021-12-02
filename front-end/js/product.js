@@ -1,3 +1,6 @@
+//On initialise une classe "product" qui comprend tout ce que contient un objet produit 
+// (id, couleur, nom, description, prix, image ainsi que sa quantité)
+
 class Product {
     id;
     color;
