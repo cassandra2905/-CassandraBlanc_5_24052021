@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <a href="/front-end/panier.html">Panier</a>
+        <a href="/front-end/cart.html">Panier</a>
     </header>
 
     <main>
@@ -23,21 +23,26 @@
     </footer>
 
     <script src="./js/product.js"></script>
-    <script src="./js/listproducts.js"></script>
+    <script src="./js/listProducts.js"></script>
     <script src="./js/cart.js"></script>
 
 
     <script>
+        //On renvoie notre objet liste des teddies
         const teddiesListElement = document.getElementById("teddies-list");
 
+        //On créer l'objet panier 
         const cart = new Cart();
+
+        //On créer l'objet liste des produits
         const products = new ListProducts();
 
+        //
         products.loadingProducts()
             .then(() => {
                 for (const product of products.getProductsWithColorsNotUnique()) {
                     const liElement = document.createElement("li");
-                    liElement.innerHTML = `<a href="/front-end/produit.html?id=${product.id}">
+                    liElement.innerHTML = `<a href="/front-end/product.html?id=${product.id}">
                         <h3>${product.name}</h3>
                     </a>
                     <img src="${product.image}" alt="${product.name}" style="width: 15rem;"/>

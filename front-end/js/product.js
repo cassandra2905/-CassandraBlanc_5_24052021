@@ -1,6 +1,4 @@
 //On initialise une classe "product" qui comprend tout ce que contient un objet produit 
-// (id, couleur, nom, description, prix, image ainsi que sa quantité)
-
 class Product {
     id;
     color;
@@ -10,6 +8,8 @@ class Product {
     image;
     quantity = 0;
 
+    //(id, couleur, nom, description, prix, image ainsi que sa quantité)
+    //Le constructor sert à savoir ce qui est relatif à notre objet product
     constructor(id, color, name, description, price, image) {
         this.id = id;
         this.color = color;
@@ -19,6 +19,7 @@ class Product {
         this.image = image;
     }
 
+    //On crée une fonction getFormattedPrice afin d'obtenir notre prix formaté correctement
     getFormattedPrice() {
         return (this.price / 100) + " €";
     }

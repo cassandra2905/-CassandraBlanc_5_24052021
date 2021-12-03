@@ -10,8 +10,8 @@
 
 <body>
     <header>
-        <a href="/front-end/liste-produits.html">Accueil</a>
-        <a href="/front-end/panier.html">Panier</a>
+        <a href="/front-end/listProducts.html">Accueil</a>
+        <a href="/front-end/cart.html">Panier</a>
     </header>
 
     <main>
@@ -57,7 +57,7 @@
 
 
     <script src="./js/product.js"></script>
-    <script src="./js/listproducts.js"></script>
+    <script src="./js/listProducts.js"></script>
     <script src="./js/cart.js"></script>
 
     <script>
@@ -148,7 +148,7 @@
                     data.total = total;
                     localStorage.order = JSON.stringify(data);
 
-                    location.assign("./confirmation.html");
+                    location.assign("./confirmationOrder.html");
                 })
                 .catch(function (error) {
                     console.error("Erreur", error);
