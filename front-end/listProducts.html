@@ -37,10 +37,14 @@
         //On créer l'objet liste des produits
         const products = new ListProducts();
 
-        //
+        //On charge les produits à l'aide de la fonction "loadingProducts"
         products.loadingProducts()
             .then(() => {
+                /*Pour les produits de notre liste de produits que l'on veut charger
+                à l'aide de notre fonction sans les choix de coloris*/
                 for (const product of products.getProductsWithColorsNotUnique()) {
+
+                    //On crée une liste contenant l'id, le nom, l'image du produit
                     const liElement = document.createElement("li");
                     liElement.innerHTML = `<a href="/front-end/product.html?id=${product.id}">
                         <h3>${product.name}</h3>
@@ -48,6 +52,7 @@
                     <img src="${product.image}" alt="${product.name}" style="width: 15rem;"/>
                     <h4>${product.getFormattedPrice()}</h4>
                     <p>Coloris aux choix</p>`;
+                    //On formate le prix à l'aide la fonction "getFormattedPrice"
 
                     teddiesListElement.appendChild(liElement);
                 }

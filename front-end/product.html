@@ -48,11 +48,12 @@
         /* CHARGER LES CLASSES ET TRAITER LA PROMESSE DU PRODUIT */
 
 
-        // On créer une variable vide pour gérer le panier et on charge les données de localStorage
-        // afin de ne pas perdre les données à chaque changement de pages
+        // On crée une constante cart qui contient une nouvelle classe cart sans paramètres
+        //Et une constante ListProducts qui contient une nouvelle calsse sans paramètres
         const cart = new Cart();
         const products = new ListProducts();
 
+        //On créer les constantes contenant tout ce qui est relatif à notre objet (titre, image, description, prix...)
         const titre = document.getElementById("title");
         const image = document.getElementById("imageUrl");
         const description = document.getElementById("description");
@@ -64,6 +65,7 @@
         const url = new URL(document.location.href);
         const id = url.searchParams.get("id");
 
+        //On charge l'id d'un seul produit à l'aide de la fonction "loadingProduct" avec tout ce qu'il contient
         products.loadingProduct(id)
             .then(product => {
                 titre.innerText = product.name;
@@ -71,6 +73,8 @@
                 description.innerText = product.description;
                 price.value = product.price;
                 price.innerText = "Prix : " + product.price / 100 + " €";
+
+                //On créer une boucle pour afficher les couleurs sous forme de menu déroulant 
                 product.colors.forEach(color => {
                     const ligneCouleur = document.createElement("option");
                     ligneCouleur.value = color;
@@ -79,7 +83,7 @@
                 });
             });
 
-        //On créer l'évenement ajouter au panier
+        //On créer l'évenement au clic ajouter au panier
         const ajouter = document.getElementById("ajouter");
 
         ajouter.addEventListener('click', event => {

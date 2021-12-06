@@ -62,20 +62,17 @@ class ListProducts {
 
     getProductsWithColorsNotUnique() {
 
-        //Nouveau tableau où l'on mettra les id des produits sans leurs couleurs distinctives
-        //C'est donc la liste qu'on veut faire apparaitre sans les dérivés de couleur
+        //Nouveau tableau où l'on mettra les objets sans leurs coloris au choix
+        //C'est donc la liste des produits qu'on veut faire apparaitre sans les dérivés de couleur
         const newList = [];
 
-        //Tableau liste d'id
+        //Tableau qui vérifie les id des produits afin de les regrouper dans les objets adéquats
         const idList = [];
 
         //Pour les produits de cette liste :
         for (const product of this.list) {
-            //Si le tableau de la liste des id n'inclue pas l'id d'un produit 
             if (!idList.includes(product.id)) {
-                //On ajoute à la liste des id l'id du produit 
                 idList.push(product.id);
-                //Et on ajoute le produit à notre nouveau tableau 
                 newList.push(product);
             }
         }
