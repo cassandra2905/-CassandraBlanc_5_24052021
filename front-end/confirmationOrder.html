@@ -28,22 +28,24 @@
     </footer>
 
     <script>
-        //On créer les variables pour intéragir avec le DOM afin de remplir les champs prénom, prix total et Id commande
+        /*On créer les variables pour intéragir avec le DOM afin de remplir les champs prénom, prix total 
+        et Id commande*/
         const firstName = document.getElementById("firstNameClient");
         const totalPrice = document.getElementById("totalPrice");
         const orderId = document.getElementById("orderId");
 
-        //
+        //On stocke les données de la commande dans le navigateur si celle-ci est définie dans celui-ci
         if (localStorage.order) {
             const data = JSON.parse(localStorage.order);
-
+            /*On récupère sans balisage html les données de la commande (prénom, prix total, id de commande)*/
             firstName.innerText = data.contact.firstName;
             totalPrice.innerText = `${data.total / 100} €`;
             orderId.innerText = data.orderId;
-
+            //Si order n'est pas défini alors on redirige vers la page d'accueil
             localStorage.removeItem("order");
         } else {
             location.assign("./liste-produits.html");
+
         }
     </script>
 </body>

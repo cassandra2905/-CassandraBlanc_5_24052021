@@ -48,8 +48,8 @@
         /* CHARGER LES CLASSES ET TRAITER LA PROMESSE DU PRODUIT */
 
 
-        // On crée une constante cart qui contient une nouvelle classe cart sans paramètres
-        //Et une constante ListProducts qui contient une nouvelle calsse sans paramètres
+        //On crée une constante cart qui contient une nouvelle classe cart (panier) 
+        //Et une constante ListProducts qui contient une nouvelle calsse 
         const cart = new Cart();
         const products = new ListProducts();
 
@@ -90,7 +90,10 @@
             event.preventDefault();
             const color = listeCouleur.options[listeCouleur.selectedIndex].value;
 
-            // id, color, name, description, price, image
+            /*INSTANCIATION DE L'OBJET AVEC LA CLASSE PRODUCT*/
+
+            /*La constante "selectProduct" contient la classe product qui à pour paramètres un constructor 
+            qui contient id, color, name, description, price, image*/
             const selectProduct = new Product(
                 id,
                 color,
@@ -100,10 +103,14 @@
                 image.src
             );
 
+            /*On ajoute à les produits que l'on choisi à notre panier avec la fonction "addproduct"
+            qui prend en paramètres select product qui contient un object product, ainsi que la valeur de la qté*/
             cart.addProduct(selectProduct, quantite.value);
 
+            //Quand on clique sur le bouton "ajouter" le message ci-dessous s'affiche avec le nom du produit choisi
             ajouter.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
 
+            //Après l'évènement au click le bouton d'ajout revient à l'état initial après 3 secondes 
             setTimeout(() => {
                 ajouter.innerText = "Ajouter au panier";
             }, 3000);

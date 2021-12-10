@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.redirect('/front-end/liste-produits.html');
+  res.redirect('/front-end/listProducts.html');
 })
 
 app.use('/front-end', express.static(path.join(__dirname, 'front-end')));

@@ -61,10 +61,14 @@
     <script src="./js/cart.js"></script>
 
     <script>
+        //On crée une constante cart qui contient une nouvelle classe cart 
         const cart = new Cart();
 
+        //On déclare les constantes contenant la liste des produits et le coût total des produits dans le panier
         const listProducts = document.getElementById('listProducts');
         const totalProducts = document.getElementById('totalProducts');
+
+        //On déclare les constantes des champs du formulaire 
         const sendForm = document.getElementById("send");
         const firstName = document.getElementById("firstName");
         const lastName = document.getElementById("lastName");
@@ -72,10 +76,12 @@
         const city = document.getElementById("city");
         const email = document.getElementById("email");
 
+        //On déclare la variable du total 
         let total = 0;
 
+        //Pour l'objet produit de la liste des produits dans le panier
         for (const object_product of cart.listProducts) {
-            // id, color, name, description, price, image
+            //L'objet produit à pour constructor l' id, la couleur, le nom, la description, le prix, l'image
             const product = new Product(
                 object_product.id,
                 object_product.color,
@@ -91,7 +97,8 @@
 
             const divProduct = document.createElement('div');
 
-            // On créé en html les données relatives au produit
+            //On créé en html les données relatives au produit
+            //On créer les boutons pour gérer la quantité d'un produit 
             divProduct.innerHTML = `<h4>${product.name}</h4>
             <img style="width: 10rem;" src="${product.image}" alt="${product.name}"/>
             <p>Couleur : ${product.color}</p>
@@ -103,13 +110,14 @@
                 <button class="bt-supprimer" onclick="deleteProduct('${product.id}', '${product.color}')">Supprimer</button>
             </div>
             <p>Prix : ${product.getFormattedPrice()}</p>`;
-
+            //On assigne le prix formaté à notre produit à l'aide de la fonction "getFormattedPrice"
+            //On applique le formatage du bloc divProduct contenant les input à la liste des produits 
             listProducts.appendChild(divProduct);
         }
 
         totalProducts.innerText = total / 100;
 
-        // Passer la commande
+        //Annule l'évènment par défaut lors du clic sur le bouton d'envoi du formulaire 
         sendForm.addEventListener('click', e => {
             e.preventDefault();
 
@@ -127,9 +135,10 @@
                 products: idProductsOfCart
             };
 
-            //On effectue une requête réseau pour envoyer les données 
-            //Avec la méthode POST on envoie l'objet contact, le tableau de produits
-            //Une fois le formulaire rempli, on stocke le résultat et on redirige vers la page de confirmation
+            //On effectue une requête réseau pour envoyer les données concernant notre commande
+            //Avec la méthode POST on envoie l'objet contact, le tableau des produits commandés
+            /*Une fois le formulaire rempli, on stocke le résultat et on redirige vers la page de 
+            confirmation de commande*/
             fetch("/api/teddies/order", {
                 method: "POST",
                 headers: {
@@ -155,16 +164,19 @@
                 });
         });
 
+        //Fonction pour dimunuer la quantité d'un produit (actualise le panier)
         function less(id, color) {
             cart.removeProduct({ id, color });
             location.reload();
         }
 
+        //Fonction pour augmenter la quantité d'un produit (actualise le panier)
         function more(id, color) {
             cart.addProduct({ id, color });
             location.reload();
         }
 
+        //Fonction pour supprimer un produit du panier (actualise le panier)
         function deleteProduct(id, color) {
             cart.deleteProductOfCart({ id, color });
             location.reload();
