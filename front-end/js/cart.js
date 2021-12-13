@@ -17,7 +17,7 @@ class Cart {
         for (const productCart of this.listProducts) {
             //Si le produit existe déjà, on doit éviter les doublons
             if (product.id == productCart.id && product.color == productCart.color) {
-                productCart.quantity += quantity;
+                productCart.quantity = +productCart.quantity + +quantity;
                 exist = true;
             }
         }
