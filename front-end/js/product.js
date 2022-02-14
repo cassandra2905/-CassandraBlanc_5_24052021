@@ -24,5 +24,3 @@ class Product {
         return (this.price / 100) + " €";
     }
 }
-
-module.exports = Product;

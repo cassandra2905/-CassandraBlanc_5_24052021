@@ -82,5 +82,3 @@ class Cart {
         //La fonction retourne donc l'id des produits
     }
 }
-
-module.exports = Cart;

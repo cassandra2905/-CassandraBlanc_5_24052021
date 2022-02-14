@@ -80,4 +80,3 @@ class ListProducts {
         return newList;
     }
 }
-module.exports = ListProducts;
