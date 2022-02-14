@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --ext js,json,html,css --watch"
+    "start": "nodemon --ext js,json,html,css --watch",
+    "test": "jasmine"
   },
   "author": "",
   "license": "ISC",

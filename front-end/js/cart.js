@@ -31,7 +31,7 @@ class Cart {
         this.saveCart();
     }
 
-    //On diminue la quantité d'un produit
+    //On diminue la quantité des produits dans le panier
     removeProduct(product) {
 
         //Pour les produits dans le panier de la liste des produits :
@@ -82,3 +82,5 @@ class Cart {
         //La fonction retourne donc l'id des produits
     }
 }
+
+module.exports = Cart;

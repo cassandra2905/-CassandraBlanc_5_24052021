@@ -3,7 +3,7 @@ class ListProducts {
 
     constructor() { }
 
-    //Requete réseau exécutéé à l'aide d'une promesse (resolve) ou rejetée (dans le cas echéant)
+    //Requete réseau exécutée à l'aide d'une promesse (resolve) ou rejetée (dans le cas échéant)
     // Chargement de tous les produits dans le tableau
 
     loadingProducts() {
@@ -59,7 +59,6 @@ class ListProducts {
     }
 
     //On génère la liste des produits sans leur couleurs au choix pour ne pas avoir de produits doublons
-
     getProductsWithColorsNotUnique() {
 
         //Nouveau tableau où l'on mettra les objets sans leurs coloris au choix
@@ -77,7 +76,8 @@ class ListProducts {
             }
         }
 
-        return newList;
         //Notre nouvelle liste de produits sans dérivés de couleur est retournée 
+        return newList;
     }
 }
+module.exports = ListProducts;
