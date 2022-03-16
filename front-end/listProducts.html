@@ -6,16 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orinoco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
     <header>
-        <a href="/front-end/cart.html">Panier</a>
+        <figure class="logo-header">
+            <img src="/images/logo-min.jpg" alt="logo Orinoco">
+        </figure>
+        <ul class="rubric-list">
+            <li>
+                <a href="/front-end/listProducts.html">
+                    <i class="fa-solid fa-house"></i>
+                    Accueil
+                </a>
+                <a href="/front-end/cart.html">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    Panier
+                </a>
+            </li>
+        </ul>
     </header>
 
     <main>
         <h1>Ours en peluche faits à la main</h1>
-        <ul id="teddies-list"></ul>
+        <ul id="teddies-list">
+            <img id="loading" src="./../images/loading.gif" alt="Chargement en cours" />
+        </ul>
     </main>
 
     <footer>
@@ -40,22 +68,26 @@
         //On charge les produits à l'aide de la fonction "loadingProducts"
         products.loadingProducts()
             .then(() => {
-                /*Pour les produits de notre liste de produits que l'on veut charger
-                à l'aide de notre fonction sans les choix de coloris*/
-                for (const product of products.getProductsWithColorsNotUnique()) {
+                setTimeout(() => {
+                    teddiesListElement.innerHTML = "";
 
-                    //On crée une liste contenant l'id, le nom, l'image du produit
-                    const liElement = document.createElement("li");
-                    liElement.innerHTML = `<a href="/front-end/product.html?id=${product.id}">
-                        <h3>${product.name}</h3>
-                    </a>
-                    <img src="${product.image}" alt="${product.name}" style="width: 15rem;"/>
-                    <h4>${product.getFormattedPrice()}</h4>
-                    <p>Coloris au choix</p>`;
-                    //On formate le prix à l'aide la fonction "getFormattedPrice"
+                    /*Pour les produits de notre liste de produits que l'on veut charger
+                    à l'aide de notre fonction sans les choix de coloris*/
+                    for (const product of products.getProductsWithColorsNotUnique()) {
 
-                    teddiesListElement.appendChild(liElement);
-                }
+                        //On crée une liste contenant l'id, le nom, l'image du produit
+                        const liElement = document.createElement("li");
+                        liElement.innerHTML = `<a class="product" href="/front-end/product.html?id=${product.id}">
+                            <h2>${product.name}</h2>
+                            <img src="${product.image}" alt="${product.name}"/>
+                            <div class="price">${product.getFormattedPrice()}</div>
+                            <p>Coloris au choix</p>
+                        </a>`;
+                        //On formate le prix à l'aide la fonction "getFormattedPrice"
+
+                        teddiesListElement.appendChild(liElement);
+                    }
+                }, 500);
             });
     </script>
 </body>
