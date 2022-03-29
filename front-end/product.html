@@ -6,38 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orinoco Produits</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style-product.css">
 </head>
 
 <body>
     <header>
-        <a href="/front-end/listProducts.html">Accueil</a>
-        <a href="/front-end/cart.html">Panier</a>
+        <figure id="logo-header">
+            <img src="/images/logo-min.jpg" alt="logo Orinoco">
+        </figure>
+        <ul class="rubric-list">
+            <li>
+                <a href="/front-end/listProducts.html"><i class="fa-solid fa-house"></i>
+                    Accueil
+                </a>
+            </li>
+            <li>
+                <a href="/front-end/cart.html"> <i class="fa-solid fa-basket-shopping"></i>
+                    Panier
+                </a>
+            </li>
+        </ul>
     </header>
     <main>
-        <section>
-            <h2 id="title"></h2>
-            <img id="imageUrl" src="" />
-            <p id="description"></p>
-        </section>
 
-        <h3 id="price"></h3>
+        <h2 id="title"></h2>
 
-        <h3>Couleur</h3>
+        <article class="product-description">
+            <div class="product-characteristics">
+                <img id="imageUrl" src="" />
 
-        <p>
-            <select name="colors-list" id="colors"></select>
-        </p>
+                <div class="block-product">
+                    <p id="price"></p>
+                    <p id="description"></p>
 
-        <h3>Quantité</h3>
+                    <p class="text-description">Couleur</p>
+                    <select id="colors" class="input-size" name="colors-list"></select>
 
-        <form>
-            <input id="quantite" type="number" min="1" max="10" value="1"> <br />
-        </form>
+                    <p class="text-description">Quantité</p>
+                    <input id="quantity" class="input-size" type="number" min="1" max="10" value="1">
 
-        <button id="ajouter">Ajouter au panier</button>
+                    <button id="add">Ajouter au panier</button>
+                </div>
+            </div>
+        </article>
+
     </main>
     <footer>
-
+        <ul class="footer-list">
+            <li><a>Mentions légales</a></li>
+            <li><a href="mailto:contact@orinoco.com">Contact</a></li>
+        </ul>
     </footer>
 
     <script src="./js/Product.js"></script>
@@ -59,7 +88,7 @@
         const description = document.getElementById("description");
         const price = document.getElementById("price");
         const listeCouleur = document.getElementById("colors");
-        const quantite = document.getElementById("quantite");
+        const quantity = document.getElementById("quantity");
 
         // On récupère l'id dans l'url
         const url = new URL(document.location.href);
@@ -84,7 +113,7 @@
             });
 
         //On créer l'évenement au clic ajouter au panier
-        const ajouter = document.getElementById("ajouter");
+        const ajouter = document.getElementById("add");
 
         ajouter.addEventListener('click', event => {
             event.preventDefault();
@@ -105,7 +134,7 @@
 
             /*On ajoute à les produits que l'on choisi à notre panier avec la fonction "addproduct"
             qui prend en paramètres select product qui contient un object product, ainsi que la valeur de la qté*/
-            cart.addProduct(selectProduct, quantite.value);
+            cart.addProduct(selectProduct, quantity.value);
 
             //Quand on clique sur le bouton "ajouter" le message ci-dessous s'affiche avec le nom du produit choisi
             ajouter.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;

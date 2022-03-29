@@ -50,9 +50,13 @@ header {
 main {
     background-image: url(/images/lines-h2-bg-min.jpg);
     background-attachment:fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
-main h1 {
+main h2 {
     font-family: "Dancing Script";
     color: #172c5c;
     font-size: 3rem;
@@ -60,61 +64,82 @@ main h1 {
     white-space: wrap;
 }
 
-#teddies-list {
+.product-description {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
     font-family: "Roboto";
     padding: 0;
     justify-content: center;
+    margin-bottom: 4rem;
+
 }
 
-#teddies-list li {
-    background-color: white;
-    border: 1px solid #bbb;
-    width: 20rem;
-    height: 25rem;
-    margin: 1.5rem 2rem;
-    padding: 0;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
-}
-
-#teddies-list li:hover {
-    box-shadow: 0 0 5px #aaa;
-    transform: scale(1.03);
-}
-
-#teddies-list img {
+.product-characteristics > #imageUrl {
     width: 100%;
-    height: 15rem;
+    height: 35rem;
     object-fit: cover;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
     margin-bottom: 1rem;
 }
 
-#teddies-list h2 {
-    margin: 0;
-    padding: 1rem 0;
-    font-size: 1.3rem;
-}
-
-#teddies-list .product {
+.product-characteristics {
+    width: 80%;
+    background-color: white;
+    border: 1px solid #bbb;
     display: block;
-    text-decoration: none;
-    color: #222;
-    height: 25rem;
+    flex-wrap: wrap;
+    list-style: none;
+    font-family: "Roboto";
+    padding: 0;
 }
 
-#teddies-list .product .price{
+.block-product {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+
+.block-product > #description {
+    font-weight: 300;
+}
+
+.block-product > .text-description {
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.block-product #price {
     font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
 }
 
-#loading {
-    border: 0 !important;
-    width: 10rem !important;
-    object-fit: contain !important;
+.input-size {
+    width: 10rem;
+}
+
+#add { 
+    display: inline-block;
+    width: 50%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 2px black;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 16px;
+    margin: 2rem auto 0;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to right, #d1512a 0%, #6164b8 100%); 
+    transition: all 0.4s ease-in-out;
+}
+
+
+#add:hover {
+    background: linear-gradient(to right, #d1512a 50%, #6164b8 100%);
+    transform: scale(1.03);
 }
 
 footer {
@@ -168,7 +193,7 @@ footer {
         padding-bottom: 1rem;
     }
 
-    main h1 {
+    .product-description > h2{
         padding: 0 1rem;
         font-size: 2.2rem;
     }
@@ -177,7 +202,6 @@ footer {
         position: relative;
         bottom: 0;
         width: 100%;
-    }
-    
+    }  
 
 }
