@@ -6,17 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orinoco Panier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style-cart.css">
 </head>
 
 <body>
     <header>
-        <a href="/front-end/listProducts.html">Accueil</a>
-        <a href="/front-end/cart.html">Panier</a>
+        <figure id="logo-header">
+            <img src="/images/logo-min.jpg" alt="logo Orinoco">
+        </figure>
+        <ul class="rubric-list">
+            <li>
+                <a href="/front-end/listProducts.html"><i class="fa-solid fa-house"></i>
+                    Accueil
+                </a>
+            </li>
+            <li>
+                <a href="/front-end/cart.html"> <i class="fa-solid fa-basket-shopping"></i>
+                    Panier
+                </a>
+            </li>
+        </ul>
     </header>
 
     <main>
         <h2>Votre panier</h2>
-        <div id="listProducts"></div>
+
+        <ul id="list-item">
+            <li id="listProducts"></li>
+        </ul>
+
         <p>Total panier: <span id="totalProducts"></span> €</p><br>
 
         <p>Veuillez remplir le formulaire ci-dessous afin de valider votre commande</p>
@@ -53,8 +82,12 @@
         </form>
     </main>
 
-    <footer></footer>
-
+    <footer>
+        <ul class="footer-list">
+            <li><a>Mentions légales</a></li>
+            <li><a href="mailto:contact@orinoco.com">Contact</a></li>
+        </ul>
+    </footer>
 
     <script src="./js/product.js"></script>
     <script src="./js/listProducts.js"></script>
@@ -96,14 +129,15 @@
             total = total + (product.price * product.quantity);
 
             const divProduct = document.createElement('div');
+            divProduct.className = "product";
 
             //On créé en html les données relatives au produit
             //On créer les boutons pour gérer la quantité d'un produit 
-            divProduct.innerHTML = `<h4>${product.name}</h4>
+            divProduct.innerHTML = `<h3>${product.name}</h3>
             <img style="width: 10rem;" src="${product.image}" alt="${product.name}"/>
             <p>Couleur : ${product.color}</p>
             <div>
-                <p>Quantité :</p>
+                <p class="quantity-button">Quantité :</p>
                 <button class="bt-moins" onclick="less('${product.id}', '${product.color}')">-</button>
                 <input type="text" class="input_quantite" value="${product.quantity}" readonly/>
                 <button class="bt-plus" onclick="more('${product.id}', '${product.color}')">+</button>
