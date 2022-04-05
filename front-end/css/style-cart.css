@@ -74,17 +74,121 @@ main h2 {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    color: red;
     background-color: white;
-    border: solid 1px #777;
-    width: 100%;
+    border: solid 1px #bbb;
+    padding: 1rem;
+    margin: 2rem;
 }
 
-.product > h3 {
+.product > p {
     color: #222;
-    width: 20%;
+    margin: 1rem;
     display: flex;
-    padding: 1rem;
+    justify-content: space-around;
+    align-items: center;
+    width: 14%;
+}
+
+.product > img {
+    width: 10rem;
+    height: 100%;
+    object-fit: cover;
+    margin-right: 2rem;
+}
+
+.product input {
+    width: 2rem;
+    text-align: center;
+}
+
+.product button {
+    cursor: pointer;
+}
+
+.product .bt-delete {
+    cursor: pointer; 
+}
+
+.product > .price {
+    font-weight: bold;
+    color: #222;
+    white-space: nowrap;
+}
+
+.cart-total {
+    font-weight: bold;
+    color: #222;
+    white-space: nowrap;
+    font-family: "Roboto";
+}
+
+.cart-instructions {
+    font-family: "Roboto";
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Roboto";
+    border: solid #bbb 1px;
+    margin: 2rem 0;
+    padding: 0 2rem;
+    background-color: white;
+    width: 35%;
+}
+
+.customer-information {
+    list-style: none;
+    padding-left: 0;
+}
+
+.order-form label {
+    font-size: 0.9rem;
+}
+
+.order-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+}
+
+input:invalid {
+    border: 1px solid red;
+}
+  
+input:valid {
+    border: 1px solid #bbb;
+}
+
+.customer-information > li {
+    padding-bottom: 1rem;
+    font-size: 300;
+    color: #222;
+}
+
+#send {
+    display: block;
+    margin: 2rem auto;
+    width: 30%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 2px black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to right, #d1512a 0%, #6164b8 100%); 
+    transition: all 0.4s ease-in-out;
+
+}
+
+#send:hover {
+    background: linear-gradient(to right, #d1512a 50%, #6164b8 100%);
+    transform: scale(1.03);
 }
 
 footer {
