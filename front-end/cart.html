@@ -42,13 +42,11 @@
     <main>
         <h2>Votre panier</h2>
 
-        <ul id="list-item">
-            <li id="listProducts"></li>
-        </ul>
+        <ul id="listProducts"></ul>
 
         <p class="cart-total">Total panier : <span id="totalProducts"></span> €</p><br>
 
-        <p class="cart-instructions">Veuillez remplir le formulaire ci-dessous afin de valider votre commande</p>
+        <p class="cart-instructions">Veuillez remplir le formulaire ci-dessous afin de valider votre commande : </p>
         <form class="order-form">
             <ul class="customer-information">
                 <li>
@@ -128,14 +126,14 @@
 
             total = total + (product.price * product.quantity);
 
-            const divProduct = document.createElement('div');
-            divProduct.className = "product";
+            const liProduct = document.createElement('li');
+            liProduct.className = "product";
 
             //On créé en html les données relatives au produit
             //On créer les boutons pour gérer la quantité d'un produit 
-            divProduct.innerHTML = `<p>${product.name} (${product.color})</p>
+            liProduct.innerHTML = `<p>${product.name} (${product.color})</p>
             <img src="${product.image}" alt="${product.name}"/>
-            <div>
+            <div class="quantity-group">
                 <button class="bt-less" onclick="less('${product.id}', '${product.color}')">-</button>
                 <input type="text" class="input-quantity" value="${product.quantity}" readonly/>
                 <button class="bt-more" onclick="more('${product.id}', '${product.color}')">+</button>
@@ -144,7 +142,7 @@
             <p class="price">Prix : ${product.getFormattedPrice()}</p>`;
             //On assigne le prix formaté à notre produit à l'aide de la fonction "getFormattedPrice"
             //On applique le formatage du bloc divProduct contenant les input à la liste des produits 
-            listProducts.appendChild(divProduct);
+            listProducts.appendChild(liProduct);
         }
 
         totalProducts.innerText = total / 100;
