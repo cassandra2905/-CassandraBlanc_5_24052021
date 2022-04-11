@@ -1,0 +1,118 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    max-width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: content-box;
+    font-family: "Roboto";
+    background-color: #F3E9F1;
+    max-width: 100vw;
+    height: 5rem;
+    padding: 0 1rem;
+    z-index: 10;
+    font-size: 1rem;
+    box-shadow: 0 0 5px #777;
+}
+
+.rubric-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.rubric-list .fa-solid {
+    color: #b58ebd;
+}
+
+.rubric-list>li a {
+    text-decoration: none;
+    padding: 2rem 1rem;
+    color: black;
+    font-weight: 400;
+}
+
+.rubric-list>li a:hover {
+    text-decoration: none;
+    color: grey;
+}
+
+main {
+    background-image: url(/images/lines-h2-bg-min.jpg);
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+main h2 {
+    font-family: "Dancing Script";
+    color: #172c5c;
+    font-size: 3rem;
+    text-align: center;
+    white-space: wrap;
+}
+
+.hello-name {
+    text-align: center;
+    font-family: "Roboto";
+}
+
+.custommer-text {
+    font-family: "Roboto";
+}
+
+.customer-information {
+    font-family: "Roboto";
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: content-box;
+    font-family: "Roboto";
+    background-color: #6164b8;
+    max-width: 100vw;
+    height: 5rem;
+    z-index: 10;
+    font-size: 1rem;
+    box-shadow: 0 0 5px #777;
+}
+
+.footer-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+}
+
+.footer-list>li {
+    text-align: center;
+}
+
+.footer-list>li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 400;
+    margin: 0 2rem;
+}
+
+.footer-list>li a:hover {
+    text-shadow: 0 0 5px #aaa;
+    transform: scale(1.03);
+}

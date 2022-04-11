@@ -6,25 +6,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orinoco Confirmation commande</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/confirmation-order-style.css">
 </head>
 
 <body>
     <header>
-        <a href="/front-end/listProducts.html">Accueil</a>
-        <a href="/front-end/cart.html">Panier</a>
+        <figure id="logo-header">
+            <img src="/images/logo-min.jpg" alt="logo Orinoco">
+        </figure>
+        <ul class="rubric-list">
+            <li>
+                <a href="/front-end/listProducts.html"><i class="fa-solid fa-house"></i>
+                    Accueil
+                </a>
+            </li>
+            <li>
+                <a href="/front-end/cart.html"> <i class="fa-solid fa-basket-shopping"></i>
+                    Panier
+                </a>
+            </li>
+        </ul>
     </header>
+
     <main>
-        <h1>MERCI POUR VOTRE COMMANDE !</h1>
-        <p>Bonjour <span id="firstNameClient"></span>,</p>
-        <p>Votre commande à bien été confirmée et nous vous en remercions !</p>
-        <p>Prix total TTC :<span id="totalPrice"></span> </p>
-        <p>
-            Vous trouverez-ci dessous le récapitulatif de votre commande :
-            <span id="orderId"></span>
+        <h2>Merci pour votre commande !</h2>
+        <p class="hello-name">Bonjour <span id="firstNameClient"></span>,</p>
+        <p class="custommer-text">
+            Votre commande à bien été confirmée et nous vous en remercions !<br>
+            Vous trouverez-ci dessous le récapitulatif de votre commande
         </p>
+        <p class="customer-information">
+            N°de commande : <span id="orderId"></span> <br>
+            Prix total TTC : <span id="totalPrice"></span>
+        </p>
+
     </main>
     <footer>
-
+        <ul class="footer-list">
+            <li><a>Mentions légales</a></li>
+            <li><a href="mailto:contact@orinoco.com">Contact</a></li>
+        </ul>
     </footer>
 
     <script>
