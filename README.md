@@ -24,6 +24,9 @@ Lancer cette commande pour pouvoir lancer le serveur node :
 - [Visual Studio Code](https://code.visualstudio.com)
 - [Node.js](https://www.npmjs.com/get-npm)
 
+# Démo
+[GitHub Pages](https://cassandra2905.github.io/CassandraBlanc_5_24052021/)
+
 # Auteur
 - [Cassandra BLANC](https://github.com/cassandra2905)
 
