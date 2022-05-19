@@ -64,17 +64,23 @@ main h2 {
     white-space: wrap;
 }
 
-.hello-name {
-    text-align: center;
+.order-container {
+    box-sizing: content-box;
     font-family: "Roboto";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 53vh;
+    padding: 0 1rem 3rem 1rem;
+    margin: 1rem;
 }
 
-.custommer-text {
-    font-family: "Roboto";
+.order-container p {
+    text-align: center;
 }
 
 .customer-information {
-    font-family: "Roboto";
     font-weight: bold;
     text-align: center;
 }
@@ -115,4 +121,30 @@ footer {
 .footer-list>li a:hover {
     text-shadow: 0 0 5px #aaa;
     transform: scale(1.03);
+}
+
+@media all and (max-width: 800px) {
+
+    body {
+        padding: 0;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column;
+        height: 9rem;
+        padding-bottom: 1rem;
+    }
+
+    main h2 {
+        padding: 0 2rem;
+        font-size: 2.2rem;
+    }
+
+    footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
 }

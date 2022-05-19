@@ -27,7 +27,7 @@
         </figure>
         <ul class="rubric-list">
             <li>
-                <a href="/front-end/listProducts.html"><i class="fa-solid fa-house"></i>
+                <a href="/front-end/index.html"><i class="fa-solid fa-house"></i>
                     Accueil
                 </a>
             </li>
@@ -46,8 +46,8 @@
 
         <p class="cart-total">Total panier : <span id="totalProducts"></span> €</p><br>
 
-        <p class="cart-instructions">Veuillez remplir le formulaire ci-dessous afin de valider votre commande : </p>
-        <form class="order-form">
+        <form id="formCart" class="order-form">
+            <p class="cart-instructions">Veuillez remplir le formulaire ci-dessous afin de valider votre commande : </p>
             <ul class="customer-information">
                 <li>
                     <label for="firstName">Prénom</label>
@@ -147,52 +147,61 @@
 
         totalProducts.innerText = total / 100;
 
-        //Annule l'évènment par défaut lors du clic sur le bouton d'envoi du formulaire 
-        sendForm.addEventListener('click', e => {
-            e.preventDefault();
+        // Si le panier est rempli d'au moins un produit
+        if (cart.listProducts.length > 0) {
 
-            // Pour chaque articles dans le panier on récupère l'id qu'on met dans un tableau 
-            const idProductsOfCart = cart.getIdProducts();
+            //Annule l'évènment par défaut lors du clic sur le bouton d'envoi du formulaire 
+            sendForm.addEventListener('click', e => {
+                e.preventDefault();
 
-            const body = {
-                contact: {
-                    firstName: firstName.value,
-                    lastName: lastName.value,
-                    address: adress.value,
-                    city: city.value,
-                    email: email.value
-                },
-                products: idProductsOfCart
-            };
+                // Pour chaque articles dans le panier on récupère l'id qu'on met dans un tableau 
+                const idProductsOfCart = cart.getIdProducts();
 
-            //On effectue une requête réseau pour envoyer les données concernant notre commande
-            //Avec la méthode POST on envoie l'objet contact, le tableau des produits commandés
-            /*Une fois le formulaire rempli, on stocke le résultat et on redirige vers la page de 
-            confirmation de commande*/
-            fetch("/api/teddies/order", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-                .then(function (res) {
-                    if (res.ok) {
-                        return res.json();
-                    }
+                const body = {
+                    contact: {
+                        firstName: firstName.value,
+                        lastName: lastName.value,
+                        address: adress.value,
+                        city: city.value,
+                        email: email.value
+                    },
+                    products: idProductsOfCart
+                };
+
+                //On effectue une requête réseau pour envoyer les données concernant notre commande
+                //Avec la méthode POST on envoie l'objet contact, le tableau des produits commandés
+                /*Une fois le formulaire rempli, on stocke le résultat et on redirige vers la page de 
+                confirmation de commande*/
+                fetch("/api/teddies/order", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
                 })
-                .then(function (data) {
-                    console.log("data", data);
-                    data.total = total;
-                    localStorage.order = JSON.stringify(data);
+                    .then(function (res) {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                    })
+                    .then(function (data) {
+                        console.log("data", data);
+                        data.total = total;
+                        localStorage.order = JSON.stringify(data);
 
-                    location.assign("./confirmationOrder.html");
-                })
-                .catch(function (error) {
-                    console.error("Erreur", error);
-                });
-        });
+                        location.assign("./confirmationOrder.html");
+                    })
+                    .catch(function (error) {
+                        console.error("Erreur", error);
+                    });
+            });
+        }
+        // Sinon si le panier est vide
+        else {
+            const form = document.getElementById("formCart");
+            form.style.display = "none";
+        }
 
         //Fonction pour dimunuer la quantité d'un produit (actualise le panier)
         function less(id, color) {

@@ -27,7 +27,7 @@
         </figure>
         <ul class="rubric-list">
             <li>
-                <a href="/front-end/listProducts.html"><i class="fa-solid fa-house"></i>
+                <a href="/front-end/index.html"><i class="fa-solid fa-house"></i>
                     Accueil
                 </a>
             </li>
@@ -38,8 +38,8 @@
             </li>
         </ul>
     </header>
-    <main>
 
+    <main>
         <h2 id="title"></h2>
 
         <article class="product-description">
@@ -60,8 +60,8 @@
                 </div>
             </div>
         </article>
-
     </main>
+
     <footer>
         <ul class="footer-list">
             <li><a>Mentions légales</a></li>
@@ -83,11 +83,11 @@
         const products = new ListProducts();
 
         //On crée les constantes contenant tout ce qui est relatif à notre objet (titre, image, description, prix...)
-        const titre = document.getElementById("title");
+        const nameProduct = document.getElementById("title");
         const image = document.getElementById("imageUrl");
         const description = document.getElementById("description");
         const price = document.getElementById("price");
-        const listeCouleur = document.getElementById("colors");
+        const colorList = document.getElementById("colors");
         const quantity = document.getElementById("quantity");
 
         // On récupère l'id dans l'url
@@ -97,7 +97,7 @@
         //On charge l'id d'un seul produit à l'aide de la fonction "loadingProduct" avec tout ce qu'il contient
         products.loadingProduct(id)
             .then(product => {
-                titre.innerText = product.name;
+                nameProduct.innerText = product.name;
                 image.src = product.imageUrl;
                 description.innerText = product.description;
                 price.value = product.price;
@@ -108,16 +108,16 @@
                     const ligneCouleur = document.createElement("option");
                     ligneCouleur.value = color;
                     ligneCouleur.innerText = color;
-                    listeCouleur.appendChild(ligneCouleur);
+                    colorList.appendChild(ligneCouleur);
                 });
             });
 
         //On créer l'évenement au clic ajouter au panier
-        const ajouter = document.getElementById("add");
+        const addToCart = document.getElementById("add");
 
-        ajouter.addEventListener('click', event => {
+        addToCart.addEventListener('click', event => {
             event.preventDefault();
-            const color = listeCouleur.options[listeCouleur.selectedIndex].value;
+            const color = colorList.options[colorList.selectedIndex].value;
 
             /*INSTANCIATION DE L'OBJET AVEC LA CLASSE PRODUCT*/
 
@@ -126,7 +126,7 @@
             const selectProduct = new Product(
                 id,
                 color,
-                titre.innerText,
+                nameProduct.innerText,
                 description.innerText,
                 price.value,
                 image.src
@@ -137,11 +137,11 @@
             cart.addProduct(selectProduct, quantity.value);
 
             //Quand on clique sur le bouton "ajouter" le message ci-dessous s'affiche avec le nom du produit choisi
-            ajouter.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
+            addToCart.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
 
             //Après l'évènement au click le bouton d'ajout revient à l'état initial après 3 secondes 
             setTimeout(() => {
-                ajouter.innerText = "Ajouter au panier";
+                addToCart.innerText = "Ajouter au panier";
             }, 3000);
         });
     </script>
