@@ -1,6 +1,6 @@
 # Orinoco
 
-__Orinoco le site e-commerce thématique qui vend un seul groupe de produits.__
+__Orinoco site e-commerce thématique qui vend un seul groupe de produits.__
 
 # Pré-requis
 
