@@ -27,4 +27,5 @@ Lancer cette commande pour pouvoir lancer le serveur node :
 # Auteur
 - [Cassandra BLANC](https://github.com/cassandra2905)
 
-# Licence
+# License
+Ce projet est sous licence Apache License 2.0 - (voir le fichier [LICENSE](https://github.com/cassandra2905/CassandraBlanc_5_24052021/blob/main/LICENSE) pour plus d'informations).
