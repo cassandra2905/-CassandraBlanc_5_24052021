@@ -5,7 +5,8 @@ body {
     max-width: 100vw;
     min-height: 100vh;
     width: 100%;
-    
+    background-image: url(/images/lines-h2-bg-min.jpg);
+    background-attachment: fixed;
 }
 
 header {
@@ -28,32 +29,31 @@ header {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-    padding : 0;
+    padding: 0;
 }
 
 .rubric-list .fa-solid {
     color: #b58ebd;
 }
 
-.rubric-list > li a {
+.rubric-list>li a {
     text-decoration: none;
     padding: 2rem 1rem;
     color: black;
     font-weight: 400;
 }
 
-.rubric-list > li a:hover {
+.rubric-list>li a:hover {
     text-decoration: none;
     color: grey;
 }
 
 main {
-    background-image: url(/images/lines-h2-bg-min.jpg);
-    background-attachment:fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 4rem;
 }
 
 main h2 {
@@ -75,7 +75,7 @@ main h2 {
 
 }
 
-.product-characteristics > #imageUrl {
+.product-characteristics>#imageUrl {
     width: 100%;
     height: 35rem;
     object-fit: cover;
@@ -100,11 +100,11 @@ main h2 {
     padding: 2rem;
 }
 
-.block-product > #description {
+.block-product>#description {
     font-weight: 300;
 }
 
-.block-product > .text-description {
+.block-product>.text-description {
     font-weight: 400;
     margin-bottom: 0;
 }
@@ -119,7 +119,7 @@ main h2 {
     width: 10rem;
 }
 
-#add { 
+#add {
     display: inline-block;
     width: 50%;
     font-size: 0.9rem;
@@ -132,7 +132,7 @@ main h2 {
     margin: 2rem auto 0;
     color: white;
     cursor: pointer;
-    background: linear-gradient(to right, #d1512a 0%, #6164b8 100%); 
+    background: linear-gradient(to right, #d1512a 0%, #6164b8 100%);
     transition: all 0.4s ease-in-out;
 }
 
@@ -143,6 +143,8 @@ main h2 {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -150,6 +152,7 @@ footer {
     font-family: "Roboto";
     background-color: #6164b8;
     max-width: 100vw;
+    width: 100%;
     height: 5rem;
     z-index: 10;
     font-size: 1rem;
@@ -164,28 +167,23 @@ footer {
     padding: 0;
 }
 
-.footer-list > li {
+.footer-list>li {
     text-align: center;
 }
 
-.footer-list > li a {
+.footer-list>li a {
     text-decoration: none;
     color: white;
     font-weight: 400;
     margin: 0 2rem;
 }
 
-.footer-list > li a:hover {
+.footer-list>li a:hover {
     text-shadow: 0 0 5px #aaa;
     transform: scale(1.03);
 }
 
 @media all and (max-width: 800px) {
-
-    body {
-        padding: 0;
-    }
-
     header {
         display: flex;
         flex-direction: column;
@@ -193,7 +191,7 @@ footer {
         padding-bottom: 1rem;
     }
 
-    .product-description > h2{
+    .product-description>h2 {
         padding: 0 1rem;
         font-size: 2.2rem;
     }
@@ -202,6 +200,6 @@ footer {
         position: relative;
         bottom: 0;
         width: 100%;
-    }  
+    }
 
 }
