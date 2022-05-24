@@ -23,4 +23,24 @@ class Product {
     getFormattedPrice() {
         return (this.price / 100) + " €";
     }
+
+    // Renvoie vrai si la donnée est un Product, sinon faux
+    static check(data) {
+        // Vérifier si c'est un produit, et renvoyer vrai ou faux
+        if (data instanceof Object) {
+            const keys = Object.keys(data);
+            if ((keys.includes("id") || keys.includes("_id")) &&
+                (keys.includes("color") || keys.includes("colors")) &&
+                keys.includes("name") &&
+                keys.includes("description") &&
+                keys.includes("price") &&
+                (keys.includes("image") || keys.includes("imageUrl"))
+            ) {
+                if (typeof data.price === 'number') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

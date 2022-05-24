@@ -16,6 +16,13 @@ class ListProducts {
                 })
                 .then(data => {
                     for (const product of data) {
+
+                        // Si ce n'est pas un produit, erreur
+                        if (!Product.check(product)) {
+                            console.error("Erreur", product, "Ce n'est pas un produit!");
+                            alert("Erreur au chargement du produit, voir la console pour plus de détails");
+                            reject();
+                        }
                         for (const color of product.colors) {
                             this.list.push(new Product(
                                 product._id,
@@ -48,7 +55,12 @@ class ListProducts {
                     }
                 })
                 .then(function (data) {
-                    console.log(data);
+                    // Si ce n'est pas un produit, erreur
+                    if (!Product.check(data)) {
+                        console.error("Erreur", data, "Ce n'est pas un produit!");
+                        alert("Erreur au chargement du produit, voir la console pour plus de détails");
+                        reject();
+                    }
                     resolve(data);
                 })
                 .catch(function (err) {
