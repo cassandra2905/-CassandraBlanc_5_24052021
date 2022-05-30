@@ -119,30 +119,38 @@
             event.preventDefault();
             const color = colorList.options[colorList.selectedIndex].value;
 
-            /*INSTANCIATION DE L'OBJET AVEC LA CLASSE PRODUCT*/
-
             /*La constante "selectProduct" contient la classe product qui à pour paramètres un constructor 
             qui contient id, color, name, description, price, image*/
-            const selectProduct = new Product(
-                id,
-                color,
-                nameProduct.innerText,
-                description.innerText,
-                price.value,
-                image.src
-            );
+            let selectProduct = null;
 
-            /*On ajoute à les produits que l'on choisi à notre panier avec la fonction "addproduct"
-            qui prend en paramètres select product qui contient un object product, ainsi que la valeur de la qté*/
-            cart.addProduct(selectProduct, quantity.value);
+            /*INSTANCIATION DE L'OBJET AVEC LA CLASSE PRODUCT*/
+            products.loadingProduct(id)
+                .then(product => {
+                    selectProduct = new Product(
+                        id,
+                        color,
+                        product.name,
+                        product.description,
+                        product.price,
+                        product.imageUrl
+                    );
 
-            //Quand on clique sur le bouton "ajouter" le message ci-dessous s'affiche avec le nom du produit choisi
-            addToCart.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
+                    if (typeof +quantity.value === 'number') {
+                        /*On ajoute à les produits que l'on choisi à notre panier avec la fonction "addproduct"
+                        qui prend en paramètres select product qui contient un object product, ainsi que la valeur de la qté*/
+                        cart.addProduct(selectProduct, quantity.value);
 
-            //Après l'évènement au click le bouton d'ajout revient à l'état initial après 3 secondes 
-            setTimeout(() => {
-                addToCart.innerText = "Ajouter au panier";
-            }, 3000);
+                        //Quand on clique sur le bouton "ajouter" le message ci-dessous s'affiche avec le nom du produit choisi
+                        addToCart.innerText = `L'article ${selectProduct.name} à été ajouté au panier`;
+
+                        //Après l'évènement au click le bouton d'ajout revient à l'état initial après 3 secondes 
+                        setTimeout(() => {
+                            addToCart.innerText = "Ajouter au panier";
+                        }, 3000);
+                    } else {
+                        alert("La quantité n'est pas un nombre!");
+                    }
+                })
         });
     </script>
 </body>
