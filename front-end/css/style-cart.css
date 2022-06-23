@@ -169,6 +169,12 @@ main h2 {
     width: 35%;
 }
 
+.error {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #cc0000;
+}
+
 .customer-information {
     list-style: none;
     padding-left: 0;
@@ -184,10 +190,6 @@ main h2 {
     border-radius: 5px;
     border: 1px solid #bbb;
     box-sizing: border-box;
-}
-
-input:valid {
-    border: 1px solid #4B4;
 }
 
 .customer-information>li {

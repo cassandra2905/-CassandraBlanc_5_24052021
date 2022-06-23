@@ -52,27 +52,31 @@
                 <li>
                     <label for="firstName">Prénom</label>
                     <input id="firstName" name="firstName" type="text" placeholder="Entrez votre prénom" required>
+                    <div class="error" id="error-firstName"></div>
                 </li>
                 <li>
                     <label for="lastName">Nom</label>
                     <input id="lastName" name="lastName" type="text" placeholder="Entrez votre nom" required>
+                    <div class="error" id="error-lastName"></div>
                 </li>
 
                 <li>
                     <label for="address">Adresse</label>
                     <input id="address" name="address" type="text" placeholder="Entrez votre adresse" required>
+                    <div class="error" id="error-address"></div>
                 </li>
 
                 <li>
                     <label for="city">Ville</label>
                     <input id="city" name="city" type="text" placeholder="Ex : Paris" required>
+                    <div class="error" id="error-city"></div>
                 </li>
 
                 <li>
                     <label for="email">Email</label>
                     <input id="email" name="email" type="email" placeholder="monadresse@mail.com" required>
+                    <div class="error" id="error-email"></div>
                 </li>
-
             </ul>
 
             <div>
@@ -100,13 +104,20 @@
         const listProducts = document.getElementById('listProducts');
         const totalProducts = document.getElementById('totalProducts');
 
-        //On déclare les constantes des champs du formulaire 
+        //On déclare les constantes des champs du formulaire
         const sendForm = document.getElementById("send");
         const firstName = document.getElementById("firstName");
         const lastName = document.getElementById("lastName");
-        const adress = document.getElementById("address");
+        const address = document.getElementById("address");
         const city = document.getElementById("city");
         const email = document.getElementById("email");
+
+        //On déclare les constantes des champs d'erreur du formulaire
+        const errorFirstName = document.getElementById("error-firstName");
+        const errorLastName = document.getElementById("error-lastName");
+        const errorAddress = document.getElementById("error-address");
+        const errorCity = document.getElementById("error-city");
+        const errorEmail = document.getElementById("error-email");
 
         //On déclare la variable du total 
         let total = 0;
@@ -130,8 +141,8 @@
             const liProduct = document.createElement('li');
             liProduct.className = "product";
 
-            //On créé en html les données relatives au produit
-            //On créer les boutons pour gérer la quantité d'un produit 
+            // On créé en html les données relatives au produit
+            // On créer les boutons pour gérer la quantité d'un produit 
             liProduct.innerHTML = `<p>${product.name} (${product.color})</p>
             <img src="${product.image}" alt="${product.name}"/>
             <div class="quantity-group">
@@ -151,9 +162,66 @@
         // Si le panier est rempli d'au moins un produit
         if (cart.listProducts.length > 0) {
 
-            //Annule l'évènment par défaut lors du clic sur le bouton d'envoi du formulaire 
             sendForm.addEventListener('click', e => {
+                // Annule l'évènment par défaut lors du clic sur le bouton d'envoi du formulaire 
                 e.preventDefault();
+
+                // Déclarations de nos regex
+                // Texte et accents (pas de chiffre ni de symboles)
+                const stringWithoutNumberAndSymbol = new RegExp(/^([A-Zàâäéèêëiîïôöùûüç-]+\s)*[A-Zàâäéèêëiîïôöùûüç-]+$/, 'i');
+
+                // Texte, accents et chiffres avec un espace max (pas de symboles)
+                const stringWithoutSymbol = new RegExp(/^([0-9A-Zàâäéèêëiîïôöùûüç-]+\s)*[0-9A-Zàâäéèêëiîïôöùûüç-]+$/, 'i');
+
+                // Vérifie si la chaine de caractères est un mail
+                const stringIsEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+
+                // VÉRIFICATIONS DES CHAMPS DU FORMULAIRE
+                let error = false;
+
+                // Firstname
+                if (!stringWithoutNumberAndSymbol.test(firstName.value)) {
+                    errorFirstName.innerText = "Le format du prénom est invalide !";
+                    error = true;
+                } else {
+                    errorFirstName.innerText = '';
+                }
+
+                // Lastname
+                if (!stringWithoutNumberAndSymbol.test(lastName.value)) {
+                    errorLastName.innerText = "Le format du nom est invalide !";
+                    error = true;
+                } else {
+                    errorLastName.innerText = '';
+                }
+
+                // Address
+                if (!stringWithoutSymbol.test(address.value)) {
+                    errorAddress.innerText = "Le format de l'adresse est invalide !";
+                    error = true;
+                } else {
+                    errorAddress.innerText = '';
+                }
+
+                // City
+                if (!stringWithoutNumberAndSymbol.test(city.value)) {
+                    errorCity.innerText = "Le format de la ville est invalide !";
+                    error = true;
+                } else {
+                    errorCity.innerText = '';
+                }
+
+                // Email
+                if (!stringIsEmail.test(email.value)) {
+                    errorEmail.innerText = "Le format de l'adresse mail est invalide !";
+                    error = true;
+                } else {
+                    errorEmail.innerText = '';
+                }
+
+                // On arrête s'il y a une erreur dans le formulaire
+                if (error) { return false; }
+
 
                 // Pour chaque articles dans le panier on récupère l'id que l'on met dans un tableau 
                 const idProductsOfCart = cart.getIdProducts();
@@ -162,7 +230,7 @@
                     contact: {
                         firstName: firstName.value,
                         lastName: lastName.value,
-                        address: adress.value,
+                        address: address.value,
                         city: city.value,
                         email: email.value
                     },
